@@ -17,7 +17,6 @@
 | Паттерн | MVVM |
 | БД | PostgreSQL + Entity Framework Core |
 | Карта | GMap.NET (OpenCycletMap) |
-| DI | Microsoft.Extensions.DependencyInjection |
 
 ## Структура проекта
 
