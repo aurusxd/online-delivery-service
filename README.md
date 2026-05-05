@@ -86,7 +86,7 @@ DeliveryService/
    dotnet ef database update
    ```
 
-5. Открыть `DeliveryApp.sln` в Visual Studio и запустить (F5)
+5. Открыть `DeliveryService.sln` в Visual Studio и запустить (F5)
 
 ## Команда
 
