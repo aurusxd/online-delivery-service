@@ -22,7 +22,7 @@
 ## Структура проекта
 
 ```
-DeliveryApp/
+DeliveryService/
 ├── Models/                  # Сущности БД
 │   ├── Order.cs
 │   ├── Courier.cs
