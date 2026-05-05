@@ -63,8 +63,8 @@ DeliveryService/
 
 1. Клонировать репозиторий:
    ```bash
-   git clone https://github.com/ВАШ_НИК/DeliveryManager.git](https://github.com/aurusxd/online-delivery-service
-   cd online-delivery-service
+   git clone https://github.com/aurusxd/DeliveryService
+   cd DeliveryService
    ```
 
 2. Создать базу данных в PostgreSQL:
@@ -76,7 +76,7 @@ DeliveryService/
    ```json
    {
      "ConnectionStrings": {
-       "Default": "Host=localhost;Port=5432;Database=delivery_db;Username=postgres;Password=ВАШ_ПАРОЛЬ"
+       "Default": "Host=localhost;Port=5432;Database=delivery_db;Username=postgres;Password=secretpassword"
      }
    }
    ```
