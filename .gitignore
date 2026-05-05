@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+*.cache
+
+# Rider / Resharper (на всякий)
+.idea/
+*.DotSettings.user
