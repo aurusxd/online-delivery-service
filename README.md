@@ -63,7 +63,7 @@ DeliveryApp/
 1. Клонировать репозиторий:
    ```bash
    git clone https://github.com/ВАШ_НИК/DeliveryManager.git](https://github.com/aurusxd/online-delivery-service
-   cd DeliveryManager
+   cd online-delivery-service
    ```
 
 2. Создать базу данных в PostgreSQL:
