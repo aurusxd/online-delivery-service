@@ -1,0 +1,33 @@
+<UserControl x:Class="DeliveryService.Views.CreateOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:DeliveryService.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+
+    <UserControl.DataContext>
+        <vm:CreateOrderViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="White">
+        <StackPanel Margin="20">
+            <TextBlock Text="Новый заказ" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Откуда (Адрес):" Margin="0,10,0,5"/>
+            <TextBox Text="{Binding AddressFrom, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
+
+            <TextBlock Text="Куда (Адрес):" Margin="0,15,0,5"/>
+            <TextBox Text="{Binding AddressTo, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
+
+            <TextBlock Text="Стоимость:" Margin="0,15,0,5"/>
+            <TextBox Text="{Binding Price, StringFormat='{}{0} ₽'}" IsReadOnly="True" Background="#F9F9F9" Height="30"/>
+
+            <Button Content="Подтвердить" 
+                    Command="{Binding ConfirmOrderCommand}" 
+                    Margin="0,30,0,0" Height="40" 
+                    Background="#007ACC" Foreground="White" BorderThickness="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
