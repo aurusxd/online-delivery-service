@@ -6,14 +6,14 @@ namespace DeliveryService.Models
     public class Courier
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public int OrderId { get; set; }
+        public string Nanme { get; set; } = string.Empty;
         public int CourierPhone { get; set; }
-        public bool Is_Active { get; set; }
-        public float Current_Lat { get; set; }
-        public float Current_Lon { get; set; }
-        public string? Vehicle_Type { get; set; }
+        public bool IsActive { get; set; } = false;
+        public double Current_Lat { get; set; }
+        public double Current_Lon { get; set; }
+        public string Vehicle_Type { get; set; } = string.Empty;
+        public DateTime Created_At { get; set; } = DateTime.UtcNow;
 
-        public List<Order>? Orders { get; set; } = new();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

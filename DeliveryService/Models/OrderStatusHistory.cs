@@ -5,13 +5,11 @@ namespace DeliveryService.Models
     public class OrderStatusHistory
     {
         public int Id { get; set; }
-        public int Order_Id { get; set; }
-        public string? Status { get; set; }
-        public DateTime Created_At { get; set; }
-        public string? Feedback { get; set; }
+        public int OrderId { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public DateTime Changed_At { get; set; } = DateTime.UtcNow;
+        public string? FeedBack { get; set; }
 
-        public List<Order>? Orders { get; set; } = new();
-
-
+        public Order Order { get; set; } = null!;
     }
 }
