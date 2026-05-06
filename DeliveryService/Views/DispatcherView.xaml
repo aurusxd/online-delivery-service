@@ -18,22 +18,22 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
         </Border>
-        <Border Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1,0,0,0" Grid.Column="1">
+        <Border Background="LightGreen" BorderBrush="#E0E0E0" BorderThickness="1,0,0,0" Grid.Column="1">
             <StackPanel Margin="15,20,15,20">
                 <TextBlock Text="Активные заказы" 
                            FontSize="16" 
                            FontWeight="Bold"
                            Foreground="#555"
                            Margin="0,0,0,10"/>
-                <Border BorderBrush="#CCC" BorderThickness="1" 
+                <Border BorderBrush="#CCC" BorderThickness="1"
                         CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="White">
-                    <TextBlock Text="[Заказ #1]" FontSize="14" FontWeight="SemiBold"/>
+                        Background="DarkGray">
+                    <TextBlock Style ="{StaticResource ResourceKey=MyStyle}" Text="[Заказ #1]" FontWeight="Bold"/>
                 </Border>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
                         CornerRadius="4" Padding="10" Margin="0,0,0,20"
-                        Background="White">
-                    <TextBlock Text="[Заказ #2]" FontSize="14" FontWeight="SemiBold"/>
+                        Background="DarkGray">
+                    <TextBlock Style ="{StaticResource ResourceKey=MyStyle}" Text="[Заказ #2]" FontWeight="SemiBold"/>
                 </Border>
                 <TextBlock Text="Курьеры онлайн" 
                            FontSize="16" 
@@ -42,10 +42,10 @@
                            Margin="0,0,0,10"/>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
                         CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="White">
+                        Background="DarkGray">
                     <Grid>
                         <TextBlock Text="Иван" 
-                                   FontSize="14"
+                                   Style="{StaticResource MyStyle}"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Text="свободен" 
@@ -56,10 +56,10 @@
                 </Border>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
                         CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="White">
+                        Background="DarkGray">
                     <Grid>
                         <TextBlock Text="Петр" 
-                                   FontSize="14"
+                                   Style="{StaticResource MyStyle}"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Text="занят" 
