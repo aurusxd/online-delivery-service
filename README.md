@@ -26,6 +26,7 @@ DeliveryService/
 ├── Models/                  # Сущности БД
 │   ├── Order.cs
 │   ├── Courier.cs
+│   ├── Client.cs
 │   ├── OrderStatusHistory.cs
 │   └── RoutePoint.cs
 ├── Data/                    # EF Core
