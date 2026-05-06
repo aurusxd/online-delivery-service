@@ -34,7 +34,7 @@ namespace DeliveryService.ViewModels
         public CreateOrderViewModel()
         {
             ConfirmOrderCommand = new RelayCommand(o => CreateOrder());
-            Price = 500; // Установим базовую цену по умолчанию
+            Price = 500;
         }
 
         private void CreateOrder()
