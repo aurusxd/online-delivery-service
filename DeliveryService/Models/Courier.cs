@@ -6,7 +6,7 @@ namespace DeliveryService.Models
     public class Courier
     {
         public int Id { get; set; }
-        public string Nanme { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public int CourierPhone { get; set; }
         public bool IsActive { get; set; } = false;
         public double Current_Lat { get; set; }
