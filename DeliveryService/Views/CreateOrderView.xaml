@@ -4,10 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000"
-             Background="#1E1E1E">
-    
-    <Grid Margin="20">
+             d:DesignHeight="800" d:DesignWidth="1100"
+             Background="#F3F4F7">
+
+    <UserControl.Resources>
+        <Style x:Key="ModernSearchBox" TargetType="TextBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border x:Name="border" CornerRadius="6" Background="White" BorderBrush="#BCBCBC" BorderThickness="1" SnapsToDevicePixels="True">
+                                <Grid Margin="10,0">
+                                    <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="placeholder" Text="Поиск по клиенту или адресу..." Foreground="#888888" 
+                                               VerticalAlignment="Center" IsHitTestVisible="False" Visibility="Collapsed"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="placeholder" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#2563EB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -15,64 +48,114 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Margin="0,0,0,15">
-            <TextBlock Text="Заказы" FontSize="24" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
-            <TextBox Width="250" Height="30" Margin="20,0,0,0" 
-                     Background="#2D2D2D" Foreground="White" BorderThickness="0"
-                     VerticalContentAlignment="Center" Padding="10,0"
-                     Tag="Поиск по клиенту, адресу..."/>
-            <Button Content="+ Новый заказ" HorizontalAlignment="Right" Padding="15,5" 
-                    Background="#353535" Foreground="White" BorderThickness="0"/>
-        </DockPanel>
+        <TextBlock Grid.Row="0" Text="Журнал заказов" FontSize="28" FontWeight="SemiBold" Foreground="Black" Margin="0,0,0,25"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20">
-            <ComboBox Width="200" Height="35" Background="#2D2D2D" Foreground="White" SelectedIndex="0" Margin="0,0,10,0">
-                <ComboBoxItem Content="Все статусы"/>
-            </ComboBox>
-            <ComboBox Width="200" Height="35" Background="#2D2D2D" Foreground="White" SelectedIndex="0">
-                <ComboBoxItem Content="Все курьеры"/>
-            </ComboBox>
+            <TextBox Style="{StaticResource ModernSearchBox}" Width="350" Height="40"/>
+
+            <Border Margin="15,0,0,0" Background="White" CornerRadius="6" BorderBrush="#BCBCBC" BorderThickness="1">
+                <ComboBox Width="170" BorderThickness="0" Background="Transparent" SelectedIndex="0" VerticalContentAlignment="Center" Padding="8,0" Foreground="Black">
+                    <ComboBoxItem Content="Все статусы"/>
+                    <ComboBoxItem Content="В пути"/>
+                    <ComboBoxItem Content="Доставлено"/>
+                </ComboBox>
+            </Border>
+
+            <Border Margin="10,0,0,0" Background="White" CornerRadius="6" BorderBrush="#BCBCBC" BorderThickness="1">
+                <ComboBox Width="170" BorderThickness="0" Background="Transparent" SelectedIndex="0" VerticalContentAlignment="Center" Padding="8,0" Foreground="Black">
+                    <ComboBoxItem Content="Все курьеры"/>
+                </ComboBox>
+            </Border>
+
+            <Button Content="Добавить заказ" Margin="15,0,0,0" Padding="20,0" Height="40" Background="#2563EB" Foreground="White" BorderThickness="0" Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
 
-        <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,20">
-            <Border Background="#2D2D2D" Margin="0,0,10,0" Padding="15" CornerRadius="5">
+        <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,25">
+            <Border Background="White" CornerRadius="8" Margin="0,0,12,0" Padding="15" BorderBrush="#D1D5DB" BorderThickness="1">
                 <StackPanel>
-                    <TextBlock Text="Всего сегодня" Foreground="Gray" FontSize="12"/>
-                    <TextBlock Text="58" Foreground="White" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Всего заказов" Foreground="#555555" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBlock Text="84" Foreground="Black" FontSize="26" FontWeight="SemiBold"/>
                 </StackPanel>
             </Border>
-            <Border Background="#2D2D2D" Margin="0,0,10,0" Padding="15" CornerRadius="5">
+            <Border Background="White" CornerRadius="8" Margin="0,0,12,0" Padding="15" BorderBrush="#D1D5DB" BorderThickness="1">
                 <StackPanel>
-                    <TextBlock Text="В пути" Foreground="Gray" FontSize="12"/>
-                    <TextBlock Text="8" Foreground="#4A90E2" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="В процессе" Foreground="#2563EB" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBlock Text="12" Foreground="Black" FontSize="26" FontWeight="SemiBold"/>
                 </StackPanel>
             </Border>
-            <Border Background="#2D2D2D" Margin="0,0,10,0" Padding="15" CornerRadius="5">
+            <Border Background="White" CornerRadius="8" Margin="0,0,12,0" Padding="15" BorderBrush="#D1D5DB" BorderThickness="1">
                 <StackPanel>
-                    <TextBlock Text="Ожидают курьера" Foreground="Gray" FontSize="12"/>
-                    <TextBlock Text="3" Foreground="#F5A623" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Ожидают" Foreground="#D97706" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBlock Text="7" Foreground="Black" FontSize="26" FontWeight="SemiBold"/>
                 </StackPanel>
             </Border>
-            <Border Background="#2D2D2D" Padding="15" CornerRadius="5">
+            <Border Background="White" CornerRadius="8" Padding="15" BorderBrush="#D1D5DB" BorderThickness="1">
                 <StackPanel>
-                    <TextBlock Text="Доставлено" Foreground="Gray" FontSize="12"/>
-                    <TextBlock Text="47" Foreground="#7ED321" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Завершено" Foreground="#059669" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBlock Text="65" Foreground="Black" FontSize="26" FontWeight="SemiBold"/>
                 </StackPanel>
             </Border>
         </UniformGrid>
 
-        <DataGrid Grid.Row="3" ItemsSource="{Binding Orders}" AutoGenerateColumns="False" 
-                  Background="Transparent" BorderThickness="0" Foreground="White"
-                  RowBackground="#252525" GridLinesVisibility="None" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="50"/>
-                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"/>
-                <DataGridTextColumn Header="Откуда → Куда" Binding="{Binding Route}" Width="2*"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
-                <DataGridTextColumn Header="Курьер" Binding="{Binding CourierName}" Width="*"/>
-                <DataGridTextColumn Header="Сумма" Binding="{Binding Price}" Width="80"/>
-                <DataGridTextColumn Header="Время" Binding="{Binding OrderTime}" Width="80"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Grid.Row="3" Background="White" CornerRadius="8" Padding="2" BorderBrush="#D1D5DB" BorderThickness="1">
+            <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" 
+                      Background="Transparent" BorderThickness="0" RowHeight="50"
+                      HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#EEEEEE" CanUserAddRows="False" IsReadOnly="True">
+
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F9FAFB"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="12,0"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#D1D5DB"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F3F4F6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="60"/>
+
+                    <DataGridTemplateColumn Header="КЛИЕНТ" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ClientName}" VerticalAlignment="Center" Foreground="Black" Margin="12,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="МАРШРУТ" Binding="{Binding Route}" Width="2*"/>
+
+                    <DataGridTemplateColumn Header="СТАТУС" Width="140">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="#E0E7FF" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding Status}" Foreground="Black" FontSize="11" FontWeight="Medium"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="СУММА" Binding="{Binding Price}" Width="100"/>
+                    <DataGridTextColumn Header="ВРЕМЯ" Binding="{Binding OrderTime}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>
