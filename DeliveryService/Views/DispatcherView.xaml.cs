@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GMap.NET;
+using GMap.NET.MapProviders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,17 @@ namespace DeliveryService.Views
         public DispatcherView()
         {
             InitializeComponent();
+
+            // !!ХАРДКОД ОТСЮДА ПОТОМ УБРАТЬ в viewmodel
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            Map.MapProvider = GMapProviders.OpenCycleMap;
+            Map.Position = new PointLatLng(55.0415, 82.9346); // Новосибирск
+            Map.Zoom = 12;
+            Map.MinZoom = 2;
+            Map.MaxZoom = 18;
+            Map.CanDragMap = true;
+            Map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+            //!!
         }
     }
 }
