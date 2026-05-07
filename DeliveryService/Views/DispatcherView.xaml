@@ -28,12 +28,12 @@
                 <Border BorderBrush="#CCC" BorderThickness="1"
                         CornerRadius="4" Padding="10" Margin="0,0,0,5"
                         Background="DarkGray">
-                    <TextBlock Style ="{StaticResource ResourceKey=MyStyle}" Text="[Заказ #1]" FontWeight="Bold"/>
+                    <TextBlock Style ="{StaticResource TextBlockStyle}" Text="[Заказ #1]" FontWeight="Bold"/>
                 </Border>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
                         CornerRadius="4" Padding="10" Margin="0,0,0,20"
                         Background="DarkGray">
-                    <TextBlock Style ="{StaticResource ResourceKey=MyStyle}" Text="[Заказ #2]" FontWeight="SemiBold"/>
+                    <TextBlock Style ="{StaticResource TextBlockStyle}" Text="[Заказ #2]" FontWeight="SemiBold"/>
                 </Border>
                 <TextBlock Text="Курьеры онлайн" 
                            FontSize="16" 
@@ -45,7 +45,7 @@
                         Background="DarkGray">
                     <Grid>
                         <TextBlock Text="Иван" 
-                                   Style="{StaticResource MyStyle}"
+                                   Style="{StaticResource TextBlockStyle}"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Text="свободен" 
@@ -59,7 +59,7 @@
                         Background="DarkGray">
                     <Grid>
                         <TextBlock Text="Петр" 
-                                   Style="{StaticResource MyStyle}"
+                                   Style="{StaticResource TextBlockStyle}"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Left"/>
                         <TextBlock Text="занят" 
