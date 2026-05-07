@@ -8,22 +8,23 @@
 
     <Grid Background="#F9FAFB">
         <Border Background="White" CornerRadius="10" Padding="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
-            <StackPanel>
-                <TextBlock Text="Новый заказ" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Foreground="Black"/>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.1"/>
+            </Border.Effect>
 
-                <TextBlock Text="Номер заказа" Style="{StaticResource FieldLabel}"/>
-                <TextBox Text="№ 2026-0001" IsReadOnly="True" Background="#F3F4F7" Foreground="Gray" FontWeight="Bold"/>
+            <StackPanel>
+                <TextBlock Text="Новый заказ" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Foreground="Black" HorizontalAlignment="Center"/>
 
                 <TextBlock Text="Имя клиента" Style="{StaticResource FieldLabel}"/>
-                <TextBox />
+                <TextBox Height="35" Margin="0,0,0,15" VerticalContentAlignment="Center" Padding="5,0"/>
 
                 <TextBlock Text="Телефон" Style="{StaticResource FieldLabel}"/>
-                <TextBox />
+                <TextBox Height="35" Margin="0,0,0,15" VerticalContentAlignment="Center" Padding="5,0"/>
 
                 <TextBlock Text="Адрес доставки" Style="{StaticResource FieldLabel}"/>
-                <TextBox />
+                <TextBox Height="35" Margin="0,0,0,20" VerticalContentAlignment="Center" Padding="5,0"/>
 
-                <Button Content="Создать заказ" Style="{StaticResource PrimaryButton}" Margin="0,10,0,0"/>
+                <Button Content="Создать заказ" Style="{StaticResource PrimaryButton}" Margin="0,10,0,0" Height="40"/>
             </StackPanel>
         </Border>
     </Grid>
