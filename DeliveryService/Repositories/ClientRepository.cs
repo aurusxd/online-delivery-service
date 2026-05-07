@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryService.Repositories
 {
+    /// <summary>
+    /// Репозиторий для доступа к клиентам в Базе Данных
+    /// </summary>
     public class ClientRepository
     {
         private readonly AppDbContext _context;
