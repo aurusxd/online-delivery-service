@@ -4,12 +4,21 @@ using System.Windows.Input;
 
 namespace DeliveryService.Commands
 {
+    /// <summary>
+    /// Реализация команд, асинхронная
+    /// </summary>
     public class RelayCommandAsync : ICommand
     {
         private readonly Func<object, Task> _execute;
         private readonly Func<object, bool> _canExecute;
+        /// <summary>
+        /// Выполняется ли сейчас команда
+        /// </summary>
         private bool _isExecuting;
 
+        /// <summary>
+        /// Событие, возникающее при изменении возможности выполнения команды.
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -24,11 +33,20 @@ namespace DeliveryService.Commands
         }
 
 
+        /// <summary>
+        /// Может ли выполнится команда
+        /// </summary>
+        /// <param name="parameter">Параметр команды</param>
+        /// <returns>Выполнилась ли команда</returns>
         public bool CanExecute(object parameter)
         {
             return !_isExecuting && _canExecute(parameter);
         }
 
+        /// <summary>
+        /// Выполнение команды
+        /// </summary>
+        /// <param name="parameter">Параметр команды</param>
         public async void Execute(object parameter)
         {
             if (!CanExecute(parameter))
