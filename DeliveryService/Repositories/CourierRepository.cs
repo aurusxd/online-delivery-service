@@ -49,6 +49,18 @@ namespace DeliveryService.Repositories
         }
 
         /// <summary>
+        /// Получение всех свободных от заказов курьеров
+        /// </summary>
+        /// <returns>Список курьеров, у которых нет активных заказов</returns>
+        public async Task<List<Courier>> GetFreeCouriers()
+        {
+            return await _context.Couriers
+                .Where(c => c.IsActive)
+                .Where(c => !c.Orders.Any(o => o.Status == "Assigned" || o.Status == "InProgress")) // Изменить название на нужные
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Добавление курьера
         /// </summary>
         /// <param name="courier">Курьер</param>
