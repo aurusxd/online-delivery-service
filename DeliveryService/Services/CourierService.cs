@@ -4,35 +4,6 @@ using DeliveryService.Repositories;
 namespace DeliveryService.Services
 {
     /// <summary>
-    /// Объект для отображения
-    /// </summary>
-    public class CourierDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int CourierPhone { get; set; }
-        public bool IsActive { get; set; }
-        public double Current_Lat { get; set; }
-        public double Current_Lon { get; set; }
-        public string Vehicle_Type { get; set; }
-        public DateTime Created_At { get; set; }
-
-
-        public CourierDto(int id, string name, int courierPhone, bool isActive, 
-            double current_Lat, double current_Lon, string vehicle_Type, DateTime created_At)
-        {
-            Id = id;
-            Name = name;
-            CourierPhone = courierPhone;
-            IsActive = isActive;
-            Current_Lat = current_Lat;
-            Current_Lon = current_Lon;
-            Vehicle_Type = vehicle_Type;
-            Created_At = created_At;
-        }
-    }
-
-    /// <summary>
     /// Сервис, работающий с Курьерами
     /// </summary>
     public class CourierService
@@ -49,72 +20,22 @@ namespace DeliveryService.Services
 
 
         /// <summary>
-        /// Создание DTO из объекта Courier
-        /// </summary>
-        /// <param name="c">Курьер</param>
-        /// <returns>DTO курьера</returns>
-        private CourierDto CreateDto(Courier c)
-        {
-            return new CourierDto(
-                c.Id,
-                c.Nanme,
-                c.CourierPhone,
-                c.IsActive,
-                c.Current_Lat,
-                c.Current_Lon,
-                c.Vehicle_Type,
-                c.Created_At
-            );
-        }
-
-        /// <summary>
-        /// Создание DTO списка из списка Courier
-        /// </summary>
-        /// <param name="couriers">Список курьеров</param>
-        /// <returns>Список DTO курьеров</returns>
-        private List<CourierDto> CreateDTOList(List<Courier> couriers)
-        {
-            List<CourierDto> c = new List<CourierDto>();
-            foreach (var courier in couriers)
-                c.Add(CreateDto(courier));
-
-            return c;
-        }
-
-        /// <summary>
         /// Получение всех курьеров
         /// </summary>
-        /// <returns>Список DTO курьеров</returns>
-        public async Task<List<CourierDto>> GetAllAsync()
-        {
-            var couriers = await _courierRepository.GetAllAsync();
-            List<CourierDto> c = new List<CourierDto>();
-
-            foreach (var courier in couriers)
-                c.Add(CreateDto(courier));
-
-            return c;
-        }
+        /// <returns>Список курьеров</returns>
+        public async Task<List<Courier>> GetAllAsync() => await _courierRepository.GetAllAsync();
 
         /// <summary>
         /// Получение всех активных курьеров
         /// </summary>
-        /// <returns>Список DTO активных курьеров</returns>
-        public async Task<List<CourierDto>> GetActiveCouriersAsync()
-        {
-            var couriers = await _courierRepository.GetActive();
-            return CreateDTOList(couriers);
-        }
+        /// <returns>Список активных курьеров</returns>
+        public async Task<List<Courier>> GetActiveCouriersAsync() => await _courierRepository.GetActive();
 
         /// <summary>
         /// Получение всех свободных от заказов курьеров
         /// </summary>
-        /// <returns>Список DTO свободных от заказов курьеров</returns>
-        public async Task<List<CourierDto>> GetFreeCouriersAsync()
-        {
-            var couriers = await _courierRepository.GetFreeCouriers();
-            return CreateDTOList(couriers);
-        }
+        /// <returns>Список свободных от заказов курьеров</returns>
+        public async Task<List<Courier>> GetFreeCouriersAsync() => await _courierRepository.GetFreeCouriers();
 
         /// <summary>
         /// Назначение курьера на заказ
@@ -139,6 +60,20 @@ namespace DeliveryService.Services
             order.Status = "Assigned"; // Заменить на нужный
             await _orderRepository.UpdateAsync(order);
 
+            return true;
+        }
+
+        /// <summary>
+        /// Изменение статуса онлайн/офлайн курьера
+        /// </summary>
+        /// <param name="courierId">ID курьера</param>
+        /// <returns>Прошла ли операция</returns>
+        public async Task<bool> ToggleCourierOnlineAsync(int courierId)
+        {
+            if (await _courierRepository.GetById(courierId) == null) 
+                return false;
+
+            await _courierRepository.ToggleOnline(courierId);
             return true;
         }
     }
