@@ -16,7 +16,7 @@ namespace DeliveryService.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-
+       
         public RelayCommandAsync(Func<object, Task> execute, Func<object, bool>? canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
