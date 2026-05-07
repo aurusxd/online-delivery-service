@@ -93,10 +93,10 @@ DeliveryService/
 
 | Участник | Зона ответственности |
 |---|---|
-| aurusxd | БД, модели, EF Core, миграции + остальное|
-| DanilKozlov1 | Сервисный слой, бизнес-логика, симуляция |
-| s-k-1-n-1 | Экраны заказов и создания заказа (UI + ViewModel) |
-| romchik-ww | Карта, экран диспетчерской |
+| aurusxd | Backend + Frontend + TL|
+| DanilKozlov1 | Backend |
+| s-k-1-n-1 | Frontend |
+| romchik-ww | Frontend |
 
 
 ---
