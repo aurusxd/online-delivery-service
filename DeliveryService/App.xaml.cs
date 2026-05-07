@@ -1,9 +1,8 @@
 ﻿using DeliveryService.Data;
+using DeliveryService.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace DeliveryService
@@ -33,7 +32,9 @@ namespace DeliveryService
 
 
             // Репозитории
-
+            services.AddScoped<OrderRepository>();
+            services.AddScoped<CourierRepository>();
+            services.AddScoped<ClientRepository>();
             // Сервисы
 
             // ViewModels
@@ -41,7 +42,7 @@ namespace DeliveryService
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
-            // Открываем главное окно
+            // Открываем главное окно - пока затычка
             var mainWindow = new MainWindow();
             mainWindow.Show();
         }
