@@ -1,6 +1,7 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
 using DeliveryService.Services;
+using DeliveryService.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,7 @@ namespace DeliveryService
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var mainWindow = new MainWindow();
+            var mainWindow = new DispatcherView();
             mainWindow.Show();
         }
     }
