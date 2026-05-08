@@ -44,7 +44,7 @@ namespace DeliveryService
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var mainWindow = new MainWindow();
+            var mainWindow = new ListCouriersView();
             mainWindow.Show();
         }
     }
