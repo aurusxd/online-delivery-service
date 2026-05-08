@@ -1,0 +1,80 @@
+﻿using DeliveryService.Models;
+using DeliveryService.Repositories;
+
+namespace DeliveryService.Services
+{
+    /// <summary>
+    /// Сервис, работающий с Курьерами
+    /// </summary>
+    public class CourierService
+    {
+        private readonly OrderRepository _orderRepository;
+        private readonly CourierRepository _courierRepository;
+
+
+        public CourierService(OrderRepository orderRepo, CourierRepository courirerRepo)
+        {
+            _orderRepository = orderRepo;
+            _courierRepository = courirerRepo;
+        }
+
+
+        /// <summary>
+        /// Получение всех курьеров
+        /// </summary>
+        /// <returns>Список курьеров</returns>
+        public async Task<List<Courier>> GetAllAsync() => await _courierRepository.GetAllAsync();
+
+        /// <summary>
+        /// Получение всех активных курьеров
+        /// </summary>
+        /// <returns>Список активных курьеров</returns>
+        public async Task<List<Courier>> GetActiveCouriersAsync() => await _courierRepository.GetActive();
+
+        /// <summary>
+        /// Получение всех свободных от заказов курьеров
+        /// </summary>
+        /// <returns>Список свободных от заказов курьеров</returns>
+        public async Task<List<Courier>> GetFreeCouriersAsync() => await _courierRepository.GetFreeCouriers();
+
+        /// <summary>
+        /// Назначение курьера на заказ
+        /// </summary>
+        /// <param name="courierId">ID курьера</param>
+        /// <param name="orderId">ID заказа</param>
+        /// <returns>Прошла ли операция назначения</returns>
+        public async Task<bool> AssignCourierToOrderAsync(int courierId, int orderId)
+        {
+            Courier? courier = await _courierRepository.GetById(courierId);
+            if (courier == null)
+                return false;
+
+            Order? order = await _orderRepository.GetById(orderId);
+            if (order == null) 
+                return false;
+
+            if (order.CourierId != null || order.CourierId == courierId)
+                return false;
+
+            order.CourierId = courierId;
+            order.Status = "Assigned"; // Заменить на нужный
+            await _orderRepository.UpdateAsync(order);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Изменение статуса онлайн/офлайн курьера
+        /// </summary>
+        /// <param name="courierId">ID курьера</param>
+        /// <returns>Прошла ли операция</returns>
+        public async Task<bool> ToggleCourierOnlineAsync(int courierId)
+        {
+            if (await _courierRepository.GetById(courierId) == null) 
+                return false;
+
+            await _courierRepository.ToggleOnline(courierId);
+            return true;
+        }
+    }
+}
