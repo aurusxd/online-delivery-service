@@ -74,10 +74,15 @@
 
 
         <Border Grid.Row="2" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Background="White">
-            <DataGrid ItemsSource="{Binding Couriers}" MouseDoubleClick="DataGrid_MouseDoubleClick" AutoGenerateColumns="False" 
+            <DataGrid ItemsSource="{Binding Couriers}" SelectedItem="{Binding SelectedCourier}" AutoGenerateColumns="False" 
       Background="Transparent" BorderThickness="0" RowHeight="50"
       HeadersVisibility="Column" GridLinesVisibility="Horizontal"
       HorizontalGridLinesBrush="#EEEEEE" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" 
+                      Command="{Binding ToggleOnlineCommand}"
+                      CommandParameter="{Binding SelectedCourier.Id}" />
+                </DataGrid.InputBindings>
 
                 <DataGrid.Resources>
                     <Style TargetType="DataGridColumnHeader">

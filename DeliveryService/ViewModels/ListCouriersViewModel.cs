@@ -17,6 +17,7 @@ namespace DeliveryService.ViewModels
         /// Список всех курьеров
         /// </summary>
         private ObservableCollection<Courier> _couriers;
+        private Courier _selectedCourier;
 
         /// <summary>
         /// Количество всех курьеров
@@ -42,6 +43,11 @@ namespace DeliveryService.ViewModels
         {
             get => _couriers;
             set => SetProperty(ref _couriers, value);
+        }
+        public Courier SelectedCourier
+        {
+            get => _selectedCourier;
+            set => SetProperty(ref _selectedCourier, value);
         }
 
         /// <summary>

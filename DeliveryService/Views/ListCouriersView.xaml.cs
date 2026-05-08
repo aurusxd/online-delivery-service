@@ -26,18 +26,5 @@ namespace DeliveryService.Views
             InitializeComponent();
             DataContext = viewModel;
         }
-
-
-        private async void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var dataGrid = sender as DataGrid;
-            var courier = dataGrid.SelectedItem as Courier;
-
-            if (courier != null && DataContext is ListCouriersViewModel vm)
-            {
-                if (vm.ToggleOnlineCommand.CanExecute(courier.Id))
-                    vm.ToggleOnlineCommand.Execute(courier.Id);
-            }
-        }
     }
 }
