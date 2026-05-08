@@ -18,31 +18,31 @@
                   MinZoom="2"
                   MaxZoom="18" />
         </Border>
-        <Border Background="LightGreen" BorderBrush="#E0E0E0" BorderThickness="1,0,0,0" Grid.Column="1">
+        <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1,0,0,0" Grid.Column="1">
             <StackPanel Margin="15,20,15,20">
                 <TextBlock Text="Активные заказы" 
-                           FontSize="16" 
-                           FontWeight="Bold"
-                           Foreground="#555"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="Black"
                            Margin="0,0,0,10"/>
                 <Border BorderBrush="#CCC" BorderThickness="1"
-                        CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="DarkGray">
+                        CornerRadius="10" Padding="10" Margin="0,0,0,5"
+                        Background="LightGray">
                     <TextBlock Style ="{StaticResource TextBlockStyle}" Text="[Заказ #1]" FontWeight="Bold"/>
                 </Border>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
-                        CornerRadius="4" Padding="10" Margin="0,0,0,20"
-                        Background="DarkGray">
+                        CornerRadius="10" Padding="10" Margin="0,0,0,20"
+                        Background="LightGray">
                     <TextBlock Style ="{StaticResource TextBlockStyle}" Text="[Заказ #2]" FontWeight="SemiBold"/>
                 </Border>
                 <TextBlock Text="Курьеры онлайн" 
-                           FontSize="16" 
-                           FontWeight="Bold"
-                           Foreground="#555"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="Black"
                            Margin="0,0,0,10"/>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
-                        CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="DarkGray">
+                        CornerRadius="10" Padding="10" Margin="0,0,0,5"
+                        Background="LightGray">
                     <Grid>
                         <TextBlock Text="Иван" 
                                    Style="{StaticResource TextBlockStyle}"
@@ -55,8 +55,8 @@
                     </Grid>
                 </Border>
                 <Border BorderBrush="#CCC" BorderThickness="1" 
-                        CornerRadius="4" Padding="10" Margin="0,0,0,5"
-                        Background="DarkGray">
+                        CornerRadius="10" Padding="10" Margin="0,0,0,5"
+                        Background="LightGray">
                     <Grid>
                         <TextBlock Text="Петр" 
                                    Style="{StaticResource TextBlockStyle}"
