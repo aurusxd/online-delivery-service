@@ -29,21 +29,8 @@ namespace DeliveryService.Views
         public DispatcherView()
         {
             InitializeComponent();
-<<<<<<< HEAD
             MapInitializer.Initialize(Map);
-=======
 
-            // !!ХАРДКОД ОТСЮДА ПОТОМ УБРАТЬ в viewmodel
-            GMaps.Instance.Mode = AccessMode.ServerAndCache;
-            Map.MapProvider = GMapProviders.OpenCycleMap;
-            Map.Position = new PointLatLng(55.0415, 82.9346); // Новосибирск
-            Map.Zoom = 12;
-            Map.MinZoom = 2;
-            Map.MaxZoom = 18;
-            Map.CanDragMap = true;
-            Map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
-            //!!
->>>>>>> 8878fab27af73cdd7eca8b6682f01abf3c572c0a
         }
     }
 }
