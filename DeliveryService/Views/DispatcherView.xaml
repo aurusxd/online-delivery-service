@@ -26,7 +26,7 @@
                            Foreground="Black"
                            Margin="0,0,0,10"/>
 
-                <ListView x:Name="ActiveOrdersListView" BorderThickness="0" Background="Transparent">
+                <ListView x:Name="ActiveOrdersListView" BorderThickness="0" Background="Transparent" Height="300">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="#CCC" BorderThickness="1"
