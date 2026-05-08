@@ -1,5 +1,6 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
+using DeliveryService.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
