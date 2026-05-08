@@ -1,9 +1,10 @@
 ﻿using DeliveryService.Data;
+using DeliveryService.Repositories;
+using DeliveryService.Services;
+using DeliveryService.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace DeliveryService
@@ -13,19 +14,41 @@ namespace DeliveryService
     /// </summary>
     public partial class App : Application
     {
+        public static IServiceProvider? Services { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            var services = new ServiceCollection();
-
+            
             var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
 
 
+            var services = new ServiceCollection();
+
+
+            // БД
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(config.GetConnectionString("Default")));
+
+
+            // Репозитории
+            services.AddScoped<OrderRepository>();
+            services.AddScoped<CourierRepository>();
+            services.AddScoped<ClientRepository>();
+            // Сервисы
+            services.AddScoped<OrderService>();
+            services.AddScoped<CourierService>();
+
+            // ViewModels
+
+            // Собираем контейнер
+            Services = services.BuildServiceProvider();
+
+            // Открываем главное окно - пока затычка
+            var mainWindow = new NewOrderView();
+            mainWindow.Show();
         }
     }
 

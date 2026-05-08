@@ -1,7 +1,4 @@
-﻿using DeliveryService.Utils;
-using GMap.NET;
-using GMap.NET.MapProviders;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,14 +15,13 @@ using System.Windows.Shapes;
 namespace DeliveryService.Views
 {
     /// <summary>
-    /// Interaction logic for NewOrderView.xaml
+    /// Логика взаимодействия для ListCouriersView.xaml
     /// </summary>
-    public partial class NewOrderView : Window
+    public partial class ListCouriersView : Window
     {
-        public NewOrderView()
+        public ListCouriersView()
         {
             InitializeComponent();
-            MapInitializer.Initialize(Map);
         }
     }
 }

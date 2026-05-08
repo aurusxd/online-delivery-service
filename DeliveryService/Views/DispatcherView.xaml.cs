@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DeliveryService.Utils;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +25,7 @@ namespace DeliveryService.Views
         public DispatcherView()
         {
             InitializeComponent();
+            MapInitializer.Initialize(Map);
         }
     }
 }
