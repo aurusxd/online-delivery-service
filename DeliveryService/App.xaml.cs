@@ -1,6 +1,12 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
 using DeliveryService.Services;
+
+<<<<<<< HEAD
+using DeliveryService.Views;
+=======
+using DeliveryService.Services;
+>>>>>>> 6015ffe54926980ca9cea93f1c04f808df45d3c1
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
