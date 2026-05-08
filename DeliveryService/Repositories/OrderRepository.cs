@@ -86,9 +86,9 @@ namespace DeliveryService.Repositories
 
 
         /// <summary>
-        /// 
+        /// Добавление в историю изменения статусов заказов
         /// </summary>
-        /// <param name="history"></param>
+        /// <param name="history">Объект класса OrderStatusHistory</param>
         /// <returns></returns>
         public async Task AddStatusHistoryAsync(OrderStatusHistory history)
         {
