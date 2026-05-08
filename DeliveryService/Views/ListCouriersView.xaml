@@ -74,100 +74,58 @@
 
 
         <Border Grid.Row="2" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Background="White">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="750">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+            <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" 
+      Background="Transparent" BorderThickness="0" RowHeight="50"
+      HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+      HorizontalGridLinesBrush="#EEEEEE" CanUserAddRows="False" IsReadOnly="True">
 
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F9FAFB"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="12,0"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#D1D5DB"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F3F4F6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
 
-                    <Border Grid.Row="0" Background="#F9FAFB" Height="50" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
-                        <Grid Margin="16,0,16,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="120"/>
-                            </Grid.ColumnDefinitions>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Width="150"/>
 
-                            <TextBlock Grid.Column="0" Text="Курьер" FontWeight="SemiBold" Foreground="#6B7280" FontSize="12" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="Транспорт" FontWeight="SemiBold" Foreground="#6B7280" FontSize="12" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Заказов сегодня" FontWeight="SemiBold" Foreground="#6B7280" FontSize="12" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="3" Text="Статус" FontWeight="SemiBold" Foreground="#6B7280" FontSize="12" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="" FontWeight="SemiBold" Foreground="#6B7280" FontSize="12" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
+                    <DataGridTemplateColumn Header="КУРЬЕР" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="" VerticalAlignment="Center" Foreground="Black" Margin="12,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <!-- Строка 1 - Петров Алексей -->
-                    <Border Grid.Row="1" Height="75" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
-                        <Grid Margin="16,0,16,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="120"/>
-                            </Grid.ColumnDefinitions>
+                   
 
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <TextBlock Text="Петров Алексей" FontWeight="SemiBold" Foreground="#111827" FontSize="20"/>
-                                <TextBlock Text="+7 999 123-45-67" Foreground="#6B7280" FontSize="16" Margin="0,3,0,0"/>
-                            </StackPanel>
+                    <DataGridTemplateColumn Header="ТРАНСПОРТ" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="#E0E7FF" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left">
+                                    <TextBlock Foreground="Black" FontSize="11" FontWeight="Medium"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                            <TextBlock Grid.Column="1" Text="Велосипед" Foreground="#111827" FontSize="14" VerticalAlignment="Center" FontWeight="SemiBold"/>
-
-                            <TextBlock Grid.Column="2" Text="8 выполнено" Foreground="#111827" FontSize="14" VerticalAlignment="Center" FontWeight="SemiBold"/>
-
-                            <Border Grid.Column="3" Background="#10B981" CornerRadius="16" Height="34" Width="85" VerticalAlignment="Center">
-                                <TextBlock Text="Онлайн" Foreground="White" FontSize="12" FontWeight="SemiBold" 
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <Button Grid.Column="4" Content="Отметить офлайн" Background="Transparent" BorderThickness="0"
-                                    Cursor="Hand" Foreground="#3B82F6" FontSize="12" 
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0"/>
-                        </Grid>
-                    </Border>
-
-                    <!-- Строка 2 - Сидорова Светлана -->
-                    <Border Grid.Row="2" Height="75" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
-                        <Grid Margin="16,0,16,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="120"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <TextBlock Text="Сидорова Светлана" FontWeight="SemiBold" Foreground="#111827" FontSize="20"/>
-                                <TextBlock Text="+7 912 234-56-78" Foreground="#6B7280" FontSize="16" Margin="0,3,0,0"/>
-                            </StackPanel>
-
-                            <TextBlock Grid.Column="1" Text="Пешком" Foreground="#111827" FontSize="14" VerticalAlignment="Center" FontWeight="SemiBold"/>
-
-                            <TextBlock Grid.Column="2" Text="5 выполнено" Foreground="#111827" FontSize="14" VerticalAlignment="Center" FontWeight="SemiBold"/>
-
-                            <Border Grid.Column="3" Background="#9CA3AF" CornerRadius="16" Height="34" Width="85" VerticalAlignment="Center">
-                                <TextBlock Text="Офлайн" Foreground="White" FontSize="12" FontWeight="SemiBold" 
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Border>
-
-                            <Button Grid.Column="4" Content="Отметить офлайн" Background="Transparent" BorderThickness="0"
-                                    Cursor="Hand" Foreground="#3B82F6" FontSize="12" 
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0"/>
-                        </Grid>
-                    </Border>
-                </Grid>
-            </ScrollViewer>
+                    <DataGridTextColumn Header="СТАТУС" Width="200"/>
+                    <DataGridTextColumn Header="ЗАКАЗОВ"  Width="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Border>
     </Grid>
 </Window>
