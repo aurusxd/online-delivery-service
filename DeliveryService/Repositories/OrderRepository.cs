@@ -83,5 +83,18 @@ namespace DeliveryService.Repositories
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
+        public async Task AddStatusHistoryAsync(OrderStatusHistory history)
+        {
+            await _context.OrderStatusHistories.AddAsync(history);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
