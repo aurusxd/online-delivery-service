@@ -17,6 +17,9 @@ namespace DeliveryService.ViewModels
         /// Список всех курьеров
         /// </summary>
         private ObservableCollection<Courier> _couriers;
+        /// <summary>
+        /// Текущий выбранный курьер
+        /// </summary>
         private Courier _selectedCourier;
 
         /// <summary>
@@ -44,6 +47,9 @@ namespace DeliveryService.ViewModels
             get => _couriers;
             set => SetProperty(ref _couriers, value);
         }
+        /// <summary>
+        /// Текущий выбранный курьер
+        /// </summary>
         public Courier SelectedCourier
         {
             get => _selectedCourier;
