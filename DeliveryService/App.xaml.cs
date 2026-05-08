@@ -1,5 +1,6 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
+using DeliveryService.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,8 @@ namespace DeliveryService
             services.AddScoped<CourierRepository>();
             services.AddScoped<ClientRepository>();
             // Сервисы
+            services.AddScoped<OrderService>();
+            services.AddScoped<CourierService>();
 
             // ViewModels
 
