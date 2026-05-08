@@ -32,6 +32,9 @@ namespace DeliveryService.Commands
             _canExecute = canExecute ?? (_ => true);
         }
 
+        public RelayCommandAsync(Func<Task> execute, Func<bool> canExecute = null) 
+            : this(_ => execute(), _ => canExecute?.Invoke() ?? true) { }
+
 
         /// <summary>
         /// Может ли выполнится команда

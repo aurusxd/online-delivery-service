@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DeliveryService.Models;
+using DeliveryService.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,23 @@ namespace DeliveryService.Views
     /// </summary>
     public partial class ListCouriersView : Window
     {
-        public ListCouriersView()
+        public ListCouriersView(ListCouriersViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
+        }
+
+
+        private async void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            var courier = dataGrid.SelectedItem as Courier;
+
+            if (courier != null && DataContext is ListCouriersViewModel vm)
+            {
+                if (vm.ToggleOnlineCommand.CanExecute(courier.Id))
+                    vm.ToggleOnlineCommand.Execute(courier.Id);
+            }
         }
     }
 }

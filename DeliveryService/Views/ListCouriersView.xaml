@@ -47,7 +47,7 @@
         Width="180" Height="100" Margin="0,0,10,0">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                     <TextBlock Text="Всего заказов" Foreground="#6B7280" FontSize="13" Margin="10,0,0,0"/>
-                    <TextBlock Text="13" FontSize="32" FontWeight="Bold" Foreground="#111827" Margin="10,5,0,0"/>
+                    <TextBlock Text="{Binding TotalOrderCount}" FontSize="32" FontWeight="Bold" Foreground="#111827" Margin="10,5,0,0"/>
                 </StackPanel>
             </Border>
 
@@ -57,7 +57,7 @@
         Width="180" Height="100" Margin="0,0,10,0">
                 <StackPanel Margin="-36,0,-36,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <TextBlock Text="Онлайн сейчас" Foreground="#6B7280" FontSize="13" Margin="10,0,0,0"/>
-                    <TextBlock Text="1" FontSize="32" FontWeight="Bold" Foreground="#10B981" Margin="10,5,0,0"/>
+                    <TextBlock Text="{Binding OnlineCount}" FontSize="32" FontWeight="Bold" Foreground="#10B981" Margin="10,5,0,0"/>
                 </StackPanel>
             </Border>
 
@@ -67,14 +67,14 @@
         Width="180" Height="100" Margin="0,0,10,0">
                 <StackPanel Margin="-36,1,-1,-1" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <TextBlock Text="Офлайн" Foreground="#6B7280" FontSize="13" Margin="10,0,0,0"/>
-                    <TextBlock Text="1" FontSize="32" FontWeight="Bold" Foreground="#6B7280" Margin="10,5,0,0"/>
+                    <TextBlock Text="{Binding OfflineCount}" FontSize="32" FontWeight="Bold" Foreground="#6B7280" Margin="10,5,0,0"/>
                 </StackPanel>
             </Border>
         </Grid>
 
 
         <Border Grid.Row="2" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Background="White">
-            <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" 
+            <DataGrid ItemsSource="{Binding Couriers}" MouseDoubleClick="DataGrid_MouseDoubleClick" AutoGenerateColumns="False" 
       Background="Transparent" BorderThickness="0" RowHeight="50"
       HeadersVisibility="Column" GridLinesVisibility="Horizontal"
       HorizontalGridLinesBrush="#EEEEEE" CanUserAddRows="False" IsReadOnly="True">
@@ -100,12 +100,12 @@
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="№" Width="150"/>
+                    <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="150"/>
 
                     <DataGridTemplateColumn Header="КУРЬЕР" Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="" VerticalAlignment="Center" Foreground="Black" Margin="12,0"/>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="Black" Margin="12,0"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -116,14 +116,14 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#E0E7FF" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left">
-                                    <TextBlock Foreground="Black" FontSize="11" FontWeight="Medium"/>
+                                    <TextBlock Text="{Binding Vehicle_Type}" Foreground="Black" FontSize="11" FontWeight="Medium"/>
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="СТАТУС" Width="200"/>
-                    <DataGridTextColumn Header="ЗАКАЗОВ"  Width="200"/>
+                    <DataGridTextColumn Header="СТАТУС" Binding="{Binding IsActive}" Width="200"/>
+                    <DataGridTextColumn Header="ЗАКАЗОВ" Binding="{Binding Orders.Count}"  Width="200"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

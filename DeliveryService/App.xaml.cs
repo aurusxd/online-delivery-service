@@ -1,6 +1,8 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
 using DeliveryService.Services;
+using DeliveryService.ViewModels;
+
 
 <<<<<<< HEAD
 using DeliveryService.Views;
@@ -47,6 +49,10 @@ namespace DeliveryService
             services.AddScoped<CourierService>();
 
             // ViewModels
+            services.AddTransient<ListCouriersViewModel>();
+
+            // View
+            services.AddTransient<ListCouriersView>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
