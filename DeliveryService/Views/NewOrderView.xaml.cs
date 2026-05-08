@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 ﻿using DeliveryService.Utils;
 using GMap.NET;
-=======
-﻿using GMap.NET;
->>>>>>> 8878fab27af73cdd7eca8b6682f01abf3c572c0a
 using GMap.NET.MapProviders;
 using System;
 using System.Collections.Generic;
@@ -22,15 +18,14 @@ using System.Windows.Shapes;
 namespace DeliveryService.Views
 {
     /// <summary>
-    /// Логика взаимодействия для DispatcherView.xaml
+    /// Interaction logic for NewOrderView.xaml
     /// </summary>
-    public partial class DispatcherView : Window
+    public partial class NewOrderView : Window
     {
-        public DispatcherView()
+        public NewOrderView()
         {
             InitializeComponent();
             MapInitializer.Initialize(Map);
-
         }
     }
 }

@@ -18,7 +18,7 @@ namespace DeliveryService
         {
             base.OnStartup(e);
 
-            
+
             var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
