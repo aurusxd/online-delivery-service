@@ -1,7 +1,6 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
 using DeliveryService.Services;
-using DeliveryService.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +18,7 @@ namespace DeliveryService
         {
             base.OnStartup(e);
 
-            
+
             var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
@@ -47,7 +46,7 @@ namespace DeliveryService
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var mainWindow = new NewOrderView();
+            var mainWindow = new MainWindow();
             mainWindow.Show();
         }
     }
