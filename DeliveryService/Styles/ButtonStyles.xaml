@@ -19,4 +19,33 @@
         </Setter>
     </Style>
 
+	<Style x:Key="MenuCardStyle" TargetType="Button">
+    <Setter Property="Background" Value="White"/>
+    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Margin" Value="12"/>
+    <Setter Property="Width" Value="260"/>  <Setter Property="Height" Value="130"/> <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="Button">
+                <Border x:Name="border" Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="10">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.05"/>
+                    </Border.Effect>
+                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,0"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="border" Property="BorderBrush" Value="#2563EB"/>
+                        <Setter TargetName="border" Property="Background" Value="#F8FAFF"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
 </ResourceDictionary>
