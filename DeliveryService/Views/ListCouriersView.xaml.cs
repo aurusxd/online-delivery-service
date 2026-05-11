@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DeliveryService.Models;
+using DeliveryService.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace DeliveryService.Views
     /// </summary>
     public partial class ListCouriersView : Window
     {
-        public ListCouriersView()
+        public ListCouriersView(ListCouriersViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }
