@@ -15,5 +15,7 @@ namespace DeliveryService.Views
             MapInitializer.Initialize(Map);
 
         }
+        
+    
     }
 }
