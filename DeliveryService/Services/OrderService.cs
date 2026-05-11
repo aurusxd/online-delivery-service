@@ -11,7 +11,7 @@ namespace DeliveryService.Services
         private readonly OrderRepository _orderRepository;
         private readonly ClientRepository _clientRepository;
 
-        protected OrderService(OrderRepository orderRepo, ClientRepository clientRepo)
+        public OrderService(OrderRepository orderRepo, ClientRepository clientRepo)
         {
             _orderRepository = orderRepo;
             _clientRepository = clientRepo;
