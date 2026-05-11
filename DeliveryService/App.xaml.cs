@@ -1,6 +1,9 @@
 ﻿using DeliveryService.Data;
 using DeliveryService.Repositories;
 using DeliveryService.Services;
+using DeliveryService.ViewModels;
+
+
 using DeliveryService.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,12 +45,16 @@ namespace DeliveryService
             services.AddScoped<CourierService>();
 
             // ViewModels
+            services.AddTransient<ListCouriersViewModel>();
+
+            // View
+            services.AddTransient<ListCouriersView>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var mainWindow = new DispatcherView();
+            var mainWindow = Services.GetRequiredService<ListCouriersView>();
             mainWindow.Show();
         }
     }
