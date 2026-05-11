@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:DeliveryService.Views"
         mc:Ignorable="d"
         Title="NewOrderView" Height="800" Width="1100">
@@ -149,33 +150,7 @@
 
         <!-- ПРАВАЯ ПАНЕЛЬ: КАРТА -->
         <Grid Grid.Column="0" Background="#E8EDE8">
-
-            <!-- Переключатель Откуда/Куда -->
-            <Border HorizontalAlignment="Left" VerticalAlignment="Top"
-                Margin="12" Background="White" CornerRadius="6"
-                BorderBrush="#DDD" BorderThickness="1">
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Откуда" Padding="14,6" BorderThickness="0"
-                        Background="#E6F1FB" Foreground="#0C447C"
-                        FontWeight="Medium" FontSize="12" Cursor="Hand"/>
-                    <Button Content="Куда" Padding="14,6" BorderThickness="0"
-                        Background="Transparent" Foreground="#666"
-                        FontSize="12" Cursor="Hand"/>
-                </StackPanel>
-            </Border>
-
-            <gmap:GMapControl x:Name="Map"
-                  Zoom="11"
-                  MinZoom="2"
-                  MaxZoom="18" />
-
-            <!-- Подсказка снизу -->
-            <Border VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Margin="0,0,0,12" Background="White" CornerRadius="6"
-                BorderBrush="#DDD" BorderThickness="1" Padding="14,8">
-                <TextBlock Text="Кликните на карте чтобы выбрать точку"
-                       FontSize="12" Foreground="#666"/>
-            </Border>
+            <wv2:WebView2 x:Name="Map"/>
         </Grid>
     </Grid>
 </Window>

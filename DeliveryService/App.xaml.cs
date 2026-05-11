@@ -51,6 +51,7 @@ namespace DeliveryService
             services.AddTransient<OrdersListView>();
             services.AddTransient<NewOrderView>();
 
+
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
