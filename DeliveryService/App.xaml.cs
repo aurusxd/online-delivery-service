@@ -48,13 +48,13 @@ namespace DeliveryService
             services.AddTransient<ListCouriersViewModel>();
 
             // View
-            services.AddTransient<ListCouriersView>();
+            services.AddTransient<MainWindow>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var mainWindow = Services.GetRequiredService<ListCouriersView>();
+            var mainWindow = Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
     }
