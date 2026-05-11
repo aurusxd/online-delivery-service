@@ -1,4 +1,5 @@
 ﻿using DeliveryService.Commands;
+using DeliveryService.DTO;
 using DeliveryService.Models;
 using DeliveryService.Services;
 using DeliveryService.Views;
@@ -9,19 +10,6 @@ using System.Windows.Input;
 namespace DeliveryService.ViewModels
 {
     /// <summary>
-    /// Класс-DTO для отображения в окне
-    /// </summary>
-    public class OrderItem
-    {
-        public int Id { get; set; }
-        public string ClientName { get; set; } = string.Empty;
-        public string Route { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public string OrderTime { get; set; } = string.Empty;
-    }
-
-    /// <summary>
     /// Логика взаимодействия пользователя и базы данных с OrderListView
     /// </summary>
     public class OrderListViewModel : BaseViewModel
@@ -31,7 +19,7 @@ namespace DeliveryService.ViewModels
         /// <summary>
         /// Список DTO всех заказов
         /// </summary>
-        private ObservableCollection<OrderItem> _orders;
+        private ObservableCollection<OrderDTO> _orders;
         
         /// <summary>
         /// Количество заказов
@@ -53,7 +41,7 @@ namespace DeliveryService.ViewModels
         /// <summary>
         /// Список DTO всех заказов
         /// </summary>
-        public ObservableCollection<OrderItem> Orders
+        public ObservableCollection<OrderDTO> Orders
         {
             get => _orders;
             set => SetProperty(ref _orders, value);
@@ -104,7 +92,7 @@ namespace DeliveryService.ViewModels
         public OrderListViewModel(OrderService orderService)
         {
             _orderService = orderService;
-            Orders = new ObservableCollection<OrderItem>();
+            Orders = new ObservableCollection<OrderDTO>();
 
             LoadOrdersCommand = new RelayCommandAsync(
                 execute: () => TryRunTaskAsync(LoadOrdersAsync, "Ошибка загрузки"),
@@ -124,13 +112,13 @@ namespace DeliveryService.ViewModels
         {
             var orders = await _orderService.GetAllAsync();
             List<Order> activeOrders = await _orderService.GetActiveOrdersAsync();
-            var items = new List<OrderItem>();
+            var items = new List<OrderDTO>();
 
             foreach (var order in orders)
             {
                 string clientName = order.Client?.Name ?? string.Empty;
 
-                items.Add(new OrderItem
+                items.Add(new OrderDTO
                 {
                     Id = order.Id,
                     ClientName = clientName,
