@@ -25,7 +25,7 @@
             <Grid Grid.Row="0" Margin="18,16">
                 <TextBlock Text="Новый заказ" FontSize="16" FontWeight="SemiBold"
                        Foreground="Black" VerticalAlignment="Center"/>
-                <Button Content="✕" HorizontalAlignment="Right"
+                <Button Content="✕" Command="{Binding CloseCommand}" HorizontalAlignment="Right"
                     Width="28" Height="28" Background="White"
                     Foreground="Black" BorderThickness="0"
                     FontSize="14" Cursor="Hand"/>
@@ -46,14 +46,14 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Имя" FontSize="11" Foreground="#888" Margin="0,0,0,4"/>
-                            <TextBox Text="Иванов Алексей"
+                            <TextBox Text="{Binding ClientName}"
                                  Foreground="Black" BorderBrush="#444"
                                  BorderThickness="1" Padding="10,8"
                                  FontSize="13"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="Телефон" FontSize="11" Foreground="#888" Margin="0,0,0,4"/>
-                            <TextBox Text="+7 999 000-00-00"
+                            <TextBox Text="{Binding ClientPhone}"
                                  Foreground="Black" BorderBrush="#444"
                                  BorderThickness="1" Padding="10,8"
                                  FontSize="13"/>
@@ -65,7 +65,7 @@
                            Foreground="#888" Margin="0,0,0,8"/>
                     <TextBlock Text="Адрес" FontSize="11" Foreground="#888" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,4">
-                        <TextBox Text="ул. Ленина 12"
+                        <TextBox Text="{Binding AddressFrom}"
                              Foreground="Black" BorderBrush="#444"
                              BorderThickness="1" Padding="10,8,36,8"
                              FontSize="13"/>
@@ -80,11 +80,11 @@
                             <ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="Широта: 55.7558"
+                        <TextBox Grid.Column="0" Text="{Binding LatFrom}"
                              Foreground="#666"
                              BorderBrush="#444" BorderThickness="1"
                              Padding="8,6" FontSize="12" IsReadOnly="True"/>
-                        <TextBox Grid.Column="2" Text="Долгота: 37.6173"
+                        <TextBox Grid.Column="2" Text="{Binding LonFrom}"
                              Foreground="#666"
                              BorderBrush="#444" BorderThickness="1"
                              Padding="8,6" FontSize="12" IsReadOnly="True"/>
@@ -108,7 +108,7 @@
                            Foreground="#888" Margin="0,0,0,8"/>
                     <TextBlock Text="Адрес" FontSize="11" Foreground="#888" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,4">
-                        <TextBox Text="пр. Мира 47" 
+                        <TextBox Text="{Binding AddressTo}" 
                              Foreground="Black" BorderBrush="#444"
                              BorderThickness="1" Padding="10,8,36,8"
                              FontSize="13"/>
@@ -123,15 +123,19 @@
                             <ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="Широта: 55.7800"
+                        <TextBox Grid.Column="0" Text="{Binding LatTo}"
                              Foreground="#666"
                              BorderBrush="#444" BorderThickness="1"
                              Padding="8,6" FontSize="12" IsReadOnly="True"/>
-                        <TextBox Grid.Column="2" Text="Долгота: 37.6500"
+                        <TextBox Grid.Column="2" Text="{Binding LonTo}"
                              Foreground="#666"
                              BorderBrush="#444" BorderThickness="1"
                              Padding="8,6" FontSize="12" IsReadOnly="True"/>
                     </Grid>
+
+                    <TextBlock Text="СУММА" FontSize="10" FontWeight="SemiBold" Foreground="#888" Margin="0,5,0,8"/>
+                    <TextBox Text="{Binding Price}" Foreground="Black" BorderBrush="#444" BorderThickness="1" 
+                             Padding="10,5" FontSize="11"/>
 
                 </StackPanel>
             </ScrollViewer>
@@ -142,7 +146,7 @@
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="2" Content="Создать заказ"
+                <Button Grid.Column="2" Content="Создать заказ" Command="{Binding SaveCommand}"
                     Style="{StaticResource PrimaryButton}" Height="40"/>
             </Grid>
         </Grid>

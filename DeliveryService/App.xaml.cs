@@ -45,6 +45,7 @@ namespace DeliveryService
             // ViewModels
             services.AddTransient<ListCouriersViewModel>();
             services.AddTransient<OrderListViewModel>();
+            services.AddTransient<NewOrderViewModel>();
 
             // View
             services.AddTransient<ListCouriersView>();

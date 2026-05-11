@@ -1,4 +1,5 @@
 ﻿using DeliveryService.Utils;
+using DeliveryService.ViewModels;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using System;
@@ -22,10 +23,11 @@ namespace DeliveryService.Views
     /// </summary>
     public partial class NewOrderView : Window
     {
-        public NewOrderView()
+        public NewOrderView(NewOrderViewModel viewModel)
         {
             InitializeComponent();
             MapInitializer.Initialize(Map);
+            DataContext = viewModel;
         }
     }
 }

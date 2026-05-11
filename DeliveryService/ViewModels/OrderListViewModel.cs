@@ -4,6 +4,7 @@ using DeliveryService.Services;
 using DeliveryService.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DeliveryService.ViewModels
@@ -154,7 +155,6 @@ namespace DeliveryService.ViewModels
 
         /// <summary>
         /// Открытие окна создания нового заказа
-        /// <br/>Переделать на асинхронный!!!
         /// </summary>
         private void OpenAddOrderWindow()
         {
