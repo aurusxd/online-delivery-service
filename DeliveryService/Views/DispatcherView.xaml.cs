@@ -1,4 +1,5 @@
 ﻿using DeliveryService.Utils;
+using DeliveryService.ViewModels;
 using System.Windows;
 
 
@@ -9,11 +10,11 @@ namespace DeliveryService.Views
     /// </summary>
     public partial class DispatcherView : Window
     {
-        public DispatcherView()
+        public DispatcherView(DispatcherViewModel viewModel)
         {
             InitializeComponent();
             MapInitializer.Initialize(Map);
-
+            DataContext = viewModel;
         }
         
     
