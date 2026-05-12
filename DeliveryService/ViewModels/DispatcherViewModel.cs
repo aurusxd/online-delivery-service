@@ -22,7 +22,7 @@ namespace DeliveryService.ViewModels
         /// <summary>
         /// Таймер, который перезагружает данные
         /// </summary>
-        private readonly DispatcherTimer _refreshTimer;
+        private DispatcherTimer _refreshTimer;
         /// <summary>
         /// Активен ли таймер
         /// </summary>
@@ -101,10 +101,7 @@ namespace DeliveryService.ViewModels
 
             LoadDataCommand.Execute(null);
 
-            _refreshTimer = new DispatcherTimer();
-            _refreshTimer.Interval = TimeSpan.FromSeconds(TIMER_INTERVAL);
-            _refreshTimer.Tick += OnTimerTick;
-            _refreshTimer.Start();
+            InitializeTimer();
         }
 
 
@@ -187,6 +184,17 @@ namespace DeliveryService.ViewModels
 
             Debug.WriteLine("Done");
             LoadDataCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// Инициализация таймера
+        /// </summary>
+        private void InitializeTimer()
+        {
+            _refreshTimer = new DispatcherTimer();
+            _refreshTimer.Interval = TimeSpan.FromSeconds(TIMER_INTERVAL);
+            _refreshTimer.Tick += OnTimerTick;
+            _refreshTimer.Start();
         }
     }
 }
