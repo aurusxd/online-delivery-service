@@ -16,7 +16,7 @@
 | UI | WPF (.NET 8), XAML |
 | Паттерн | MVVM |
 | БД | PostgreSQL + Entity Framework Core |
-| Карта | GMap.NET (OpenCycleMap) |
+| Карта | Yandex Maps API |
 | DI | Microsoft.Extensions.DependencyInjection |
 
 ## Структура проекта
