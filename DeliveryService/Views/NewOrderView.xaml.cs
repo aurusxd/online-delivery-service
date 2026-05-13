@@ -28,6 +28,21 @@ namespace DeliveryService.Views
             InitializeComponent();
             MapInitializer.Initialize(Map);
             DataContext = viewModel;
+            MapInitializer.AddressSelected += OnAddressSelected;
+        }
+
+        private void OnAddressSelected(double lat, double lon, string address)
+        {
+            if (DataContext is NewOrderViewModel vm)
+            {
+                vm.SetSelectedAddress(lat, lon, address);
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            MapInitializer.AddressSelected -= OnAddressSelected;
+            base.OnClosed(e);
         }
     }
 }

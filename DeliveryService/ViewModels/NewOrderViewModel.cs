@@ -57,6 +57,15 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private decimal _price;
 
+        private bool _isFromMode;
+
+
+        public bool IsFromMode
+        {
+            get => _isFromMode;
+            set => SetProperty(ref _isFromMode, value);
+        }
+
         /// <summary>
         /// Имя клиента
         /// </summary>
@@ -150,6 +159,7 @@ namespace DeliveryService.ViewModels
             );
 
             CloseCommand = new RelayCommand(_ => CloseWindow(false));
+            IsFromMode = true;
         }
 
 
@@ -263,6 +273,30 @@ namespace DeliveryService.ViewModels
             {
                 ErrorMessage = "Не удалось выполнить команду";
                 return;
+            }
+        }
+        /// <summary>
+        /// Устанавливает выбранный адрес в поля для ввода
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lon"></param>
+        /// <param name="address"></param>
+        public void SetSelectedAddress(double lat, double lon, string address)
+        {
+            if (IsFromMode)
+            {
+                LatFrom = lat;
+                LonFrom = lon;
+                AddressFrom = address;
+                IsFromMode = !IsFromMode;
+            }
+            else
+            {
+                LatTo = lat;
+                LonTo = lon;
+                AddressTo = address;
+                IsFromMode = !IsFromMode;
+
             }
         }
 
