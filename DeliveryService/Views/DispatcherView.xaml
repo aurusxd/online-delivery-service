@@ -24,19 +24,19 @@
                     <UniformGrid Columns="3" Margin="0,0,0,25">
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="0,0,5,0">
                             <StackPanel>
-                                <TextBlock Text="7" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding InTransitOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="В пути" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="2,0,2,0">
                             <StackPanel>
-                                <TextBlock Text="15" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding NewOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Новых" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="5,0,0,0">
                             <StackPanel>
-                                <TextBlock Text="6" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding CompletedOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Готово" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -44,8 +44,8 @@
 
                     <TextBlock Text="АКТИВНЫЕ ЗАКАЗЫ" FontSize="12" FontWeight="Bold" Foreground="#000000" Margin="0,0,0,10"/>
 
-                    
-                    <ItemsControl x:Name="ActiveOrdersItemsControl" ItemsSource="лоплоп">
+
+                    <ItemsControl x:Name="ActiveOrdersItemsControl" ItemsSource="{Binding ActiveOrders}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel />
@@ -53,44 +53,52 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                
-                                <Border Background="White" 
+                                <Button Command="{Binding DataContext.SelectOrderCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0"
+                                HorizontalContentAlignment="Stretch">
+
+                                    <Border Background="White" 
                                     BorderBrush="#E5E7EB" 
                                     BorderThickness="1" 
                                     CornerRadius="8" 
                                     Padding="12" 
                                     Margin="0,0,0,8"
                                     Height="80">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding Id, StringFormat='№{0}'}"
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Id, StringFormat='№{0}'}"
                                                    Foreground="#111827" 
                                                    FontWeight="Bold" 
                                                    FontSize="14"/>
-                                            <TextBlock Text="проспект мира" 
+                                                <TextBlock Text="{Binding Price, StringFormat='{}{0} Руб'}" 
                                                    FontSize="12" 
                                                    Foreground="#4B5563" 
                                                    Margin="0,4,0,0"
-                                                   TextTrimming="CharacterEllipsis"/>
-                                        </StackPanel>
+                                                   TextTrimming="CharacterEllipsis"
+                                                   TextWrapping="Wrap"/>
+                                            </StackPanel>
 
-                                        <Border Grid.Column="1" 
+                                            <Border Grid.Column="1" 
                                             VerticalAlignment="Center"
                                             Background="#DBEAFE" 
                                             CornerRadius="4" 
                                             Padding="8,4">
-                                            <TextBlock Text="активный" 
+                                                <TextBlock Text="{Binding Status}" 
                                                    FontSize="10" 
                                                    Foreground="#1E40AF" 
                                                    FontWeight="Medium"/>
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
