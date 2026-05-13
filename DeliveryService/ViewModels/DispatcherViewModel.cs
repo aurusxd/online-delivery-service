@@ -16,11 +16,6 @@ namespace DeliveryService.ViewModels
     public class DispatcherViewModel : BaseViewModel
     {
         /// <summary>
-        /// Айди заказа
-        /// </summary>
-        private int _id;
-
-        /// <summary>
         /// Интервал таймера
         /// </summary>
         private const int TIMER_INTERVAL = 30; 
@@ -50,13 +45,6 @@ namespace DeliveryService.ViewModels
         /// Счётчик заказов со статусом "Done"
         /// </summary>
         private int _completedOrderCount;
-
-        public int Id
-        {
-            get => _id;
-            set => SetProperty(ref _id, value);
-        }
-
         /// <summary>
         /// Список активных заказов
         /// </summary>
@@ -129,8 +117,9 @@ namespace DeliveryService.ViewModels
                 var activeOrders = allOrders.Where(o => o.Status != "Done").OrderByDescending(o => o.Created_At).ToList();
 
                 ActiveOrders.Clear();
-                foreach (var order in activeOrders)
+                foreach (var order in activeOrders) 
                     ActiveOrders.Add(order);
+                
 
                 // Поменять статусы на нужные проекту
                 
