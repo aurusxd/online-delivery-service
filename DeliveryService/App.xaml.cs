@@ -46,18 +46,20 @@ namespace DeliveryService
             services.AddTransient<ListCouriersViewModel>();
             services.AddTransient<OrderListViewModel>();
             services.AddTransient<NewOrderViewModel>();
+            services.AddTransient<DispatcherViewModel>();
 
             // View
             services.AddTransient<ListCouriersView>();
             services.AddTransient<OrdersListView>();
             services.AddTransient<NewOrderView>();
+            services.AddTransient<DispatcherView>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var ordersView = Services.GetRequiredService<OrdersListView>();
-            ordersView.Show();
+            var win = Services.GetRequiredService<DispatcherView>();
+            win.Show();
         }
     }
 

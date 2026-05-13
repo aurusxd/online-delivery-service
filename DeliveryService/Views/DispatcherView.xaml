@@ -23,19 +23,19 @@
                     <UniformGrid Columns="3" Margin="0,0,0,25">
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="0,0,5,0">
                             <StackPanel>
-                                <TextBlock Text="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding InTransitOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="В пути" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="2,0,2,0">
                             <StackPanel>
-                                <TextBlock Text="2" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding NewOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Новых" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border Background="#F3F4F6" CornerRadius="8" Padding="10" Margin="5,0,0,0">
                             <StackPanel>
-                                <TextBlock Text="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding CompletedOrderCount}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Готово" FontSize="11" Foreground="#374151" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -43,22 +43,22 @@
 
                     <TextBlock Text="АКТИВНЫЕ ЗАКАЗЫ" FontSize="12" FontWeight="Bold" Foreground="#000000" Margin="0,0,0,10"/>
 
-                    <ListView x:Name="ActiveOrdersListView" BorderThickness="0" Background="Transparent">
+                    <ListView x:Name="ActiveOrdersListView" ItemsSource="{Binding ActiveOrders}" BorderThickness="0" Background="Transparent">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding OrderName}" 
+                                            <TextBlock Text="{Binding Id, StringFormat='№{0}'}"
                                                        Style="{StaticResource TextBlockStyle}" 
                                                        Background="Transparent"
                                                        Foreground="#111827" 
                                                        FontWeight="Bold" 
                                                        FontSize="14"/>
-                                            <TextBlock Text="ул. Пушкина, 12" FontSize="12" Foreground="#4B5563" Margin="0,4,0,0"/>
+                                            <TextBlock Text="{Binding Address_To}" FontSize="12" Foreground="#4B5563" Margin="0,4,0,0"/>
                                         </StackPanel>
                                         <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#DBEAFE" CornerRadius="4" Padding="5,2">
-                                            <TextBlock Text="В пути" FontSize="10" Foreground="#1E40AF" FontWeight="Medium"/>
+                                            <TextBlock Text="{Binding Status}" FontSize="10" Foreground="#1E40AF" FontWeight="Medium"/>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -68,7 +68,7 @@
 
                     <TextBlock Text="КУРЬЕРЫ ОНЛАЙН" FontSize="12" FontWeight="Bold" Foreground="#000000" Margin="0,20,0,10"/>
 
-                    <ListView x:Name="CouriersListView" BorderThickness="0" Background="Transparent">
+                    <ListView x:Name="CouriersListView" ItemsSource="{Binding OnlineCouriers}" BorderThickness="0" Background="Transparent">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
@@ -88,7 +88,7 @@
                                                        Background="Transparent"
                                                        Foreground="#111827" 
                                                        FontWeight="SemiBold"/>
-                                            <TextBlock Text="{Binding Status}" FontSize="12" Foreground="#059669"/>
+                                            <TextBlock Text="{Binding IsActive}" FontSize="12" Foreground="#059669"/>
                                         </StackPanel>
                                     </Grid>
                                 </Border>
