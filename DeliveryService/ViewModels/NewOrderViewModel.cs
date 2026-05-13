@@ -57,9 +57,14 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private decimal _price;
 
+        /// <summary>
+        /// Переменная, необходимая для переключения режима откуда/куда
+        /// </summary>
         private bool _isFromMode;
 
-
+        /// <summary>
+        /// Переменная, необходимая для переключения режима откуда/куда
+        /// </summary>
         public bool IsFromMode
         {
             get => _isFromMode;
