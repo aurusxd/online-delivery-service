@@ -49,7 +49,7 @@
                                 <Border Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="Test" 
+                                            <TextBlock Text="{Binding Id, StringFormat='№{0}'}"
                                                        Style="{StaticResource TextBlockStyle}" 
                                                        Background="Transparent"
                                                        Foreground="#111827" 

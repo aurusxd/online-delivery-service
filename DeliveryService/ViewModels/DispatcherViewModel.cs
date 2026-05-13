@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace DeliveryService.ViewModels
@@ -14,6 +15,11 @@ namespace DeliveryService.ViewModels
     /// </summary>
     public class DispatcherViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Айди заказа
+        /// </summary>
+        private int _id;
+
         /// <summary>
         /// Интервал таймера
         /// </summary>
@@ -44,6 +50,12 @@ namespace DeliveryService.ViewModels
         /// Счётчик заказов со статусом "Done"
         /// </summary>
         private int _completedOrderCount;
+
+        public int Id
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
 
         /// <summary>
         /// Список активных заказов
@@ -121,7 +133,8 @@ namespace DeliveryService.ViewModels
                     ActiveOrders.Add(order);
 
                 // Поменять статусы на нужные проекту
-                NewOrderCount = activeOrders.Count(o => o.Status == "New");
+                
+                NewOrderCount = activeOrders.Count(o => o.Status == "new");
                 InTransitOrderCount = activeOrders.Count(o => o.Status == "InDelivery");
                 CompletedOrderCount = allOrders.Count(o => o.Status == "Done");
             }
