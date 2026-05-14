@@ -64,7 +64,7 @@
                      VerticalContentAlignment="Center"/>
         </StackPanel>
 
-        
+
         <Button Grid.Row="4" 
                 Name="RegisterButton"
                 Content="Зарегистрироваться"
@@ -73,19 +73,5 @@
                 FontSize="16"
                 HorizontalAlignment="Center"
                 Style="{StaticResource PrimaryButton}"/>
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="Background" Value="#005A9E"/>
-			</Trigger>
-
-			<Trigger Property="IsPressed" Value="True">
-				<Setter Property="Background" Value="#004C8C"/>
-				<Setter Property="RenderTransform">
-					<Setter.Value>
-						<ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-		</Style.Triggers>
     </Grid>
 </Window>
