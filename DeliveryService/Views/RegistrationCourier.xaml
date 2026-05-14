@@ -1,0 +1,78 @@
+﻿<Window x:Class="DeliveryService.Views.RegistrationCourier"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeliveryService.Views"
+        mc:Ignorable="d"
+        Title="RegistrationCourier" Height="500" Width="500">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
+        <TextBlock Grid.Row="0" 
+                   Text="Регистрация" 
+                   FontSize="35" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,30"/>
+
+        
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <TextBlock Text="Имя:" 
+                       FontSize="18"
+                       Margin="0,0,0,5" HorizontalAlignment="Center"/>
+            <TextBox Name="NameTextBox"
+                     FontSize="18" 
+                     Height="35"
+                     Width="300"
+                     HorizontalAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+       
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <TextBlock Text="Номер телефона:" 
+                       FontSize="18"
+                       Margin="0,0,0,5" HorizontalAlignment="Center"/>
+            <TextBox Name="PhoneTextBox"
+                     Text="+7"
+                     FontSize="18" 
+                     Height="35"
+                     Width="300"
+                     HorizontalAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        
+        <StackPanel Grid.Row="3" Margin="0,0,0,30">
+            <TextBlock Text="Вид транспорта:" 
+                       FontSize="18"
+                       Margin="0,0,0,5" HorizontalAlignment="Center"/>
+            <TextBox Name="TransportTextBox"
+                     FontSize="18" 
+                     Height="35"
+                     Width="300"
+                     HorizontalAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        
+        <Button Grid.Row="4" 
+                Name="RegisterButton"
+                Content="Зарегистрироваться"
+                Height="45"
+                Width="220"
+                FontSize="16"
+                HorizontalAlignment="Center"
+                Style="{StaticResource PrimaryButton}"/>
+
+    </Grid>
+</Window>
