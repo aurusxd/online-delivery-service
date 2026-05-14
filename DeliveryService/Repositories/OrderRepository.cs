@@ -23,7 +23,17 @@ namespace DeliveryService.Repositories
         /// </summary>
         /// <param name="orderId">ID заказа</param>
         /// <returns>Заказ</returns>
+        /// 
+
         public async Task<Order?> GetById(int orderId) => await _context.Orders.FindAsync(orderId);
+
+
+        /// <summary>
+        /// Получение заказа по айди курьера
+        /// </summary>
+        /// <param name="courierId">айди курьера</param>
+        /// <returns></returns>
+        public async Task<Order?> GetByCourierId(int courierId) => await _context.Orders.FirstOrDefaultAsync(x=>x.CourierId == courierId);
 
         /// <summary>
         /// Получение всех заказов

@@ -57,7 +57,9 @@ namespace DeliveryService.Services
                 return false;
 
             order.CourierId = courierId;
-            order.Status = "Assigned"; // Заменить на нужный
+            order.Status = "assigned"; // Заменить на нужный
+            courier.Current_Lat = order.Lat_From;
+            courier.Current_Lon = order.Lon_From;
             await _orderRepository.UpdateAsync(order);
 
             return true;

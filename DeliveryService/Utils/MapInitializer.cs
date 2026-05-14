@@ -10,13 +10,16 @@ namespace DeliveryService.Utils
 {
     public static class MapInitializer
     {
+        /// <summary>
+        /// Событие при выборе адреса на карте
+        /// </summary>
         public static event Action<double, double, string>? AddressSelected;
 
         public static async Task Initialize(WebView2 MapWebView)
         {
 
 
-            string html = """
+            string html = """ 
             <!DOCTYPE html>
             <html>
             <head>
@@ -35,8 +38,9 @@ namespace DeliveryService.Utils
                 <div id="map"></div>
 
                 <script>
+                    var map;
                     ymaps.ready(function () {
-                        var map = new ymaps.Map("map", {
+                        map = new ymaps.Map("map", {
                             center: [55.0415, 82.9346],
                             zoom: 12
                         });
@@ -57,6 +61,42 @@ namespace DeliveryService.Utils
                             });
                         });
                     });
+
+
+                    function DrawRoute(startLat,startLon,endLat,endLon)
+                    {
+                        map.geoObjects.removeAll();
+                       console.log("DrawRoute вызван:", startLat, startLon, endLat, endLon);
+                        ymaps.route([
+                            [startLat, startLon],
+                            [endLat, endLon],
+                        ]).then(function(route) {
+                            console.log("Маршрут построен, добавляем на карту");
+                            map.geoObjects.add(route);
+                        }).catch(function(err) {
+                            console.log("Ошибка:", err);
+                        });
+                    }
+                    function AddMark(Lat,Lon)
+                    {
+
+            
+                        console.log("AddMark вызван:", Lat,Lon);
+                        var marker = new ymaps.Placemark(
+                        [lat, lon],
+                        {
+                            balloonContent: 'Курьер'
+                        },
+                        {
+                            preset: 'islands#blueDeliveryIcon',
+                            zIndex: 9999,
+                            iconOffset: [0, -20]
+                        }
+                    );
+
+                    map.geoObjects.add(marker);
+                    }
+
                 </script>
             </body>
             </html>

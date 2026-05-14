@@ -94,5 +94,12 @@ namespace DeliveryService.Services
             return true;
         }
 
+        /// <summary>
+        /// Получеие заказа по айди курьера
+        /// </summary>
+        /// <param name="courierId">айди курьера</param>
+        /// <returns></returns>
+        public async Task<Order?> FindOrderByCourierIdAsync(int courierId) => await _orderRepository.GetByCourierId(courierId);    
+
     }
 }
