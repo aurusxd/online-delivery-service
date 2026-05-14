@@ -9,6 +9,9 @@ using System.Windows.Data;
 
 namespace DeliveryService.Utils
 {
+    /// <summary>
+    /// Класс необходимый для изменения visibtlity элементов взазимиости от статуса заказа(в данном случае)
+    /// </summary>
     public class StatusToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
