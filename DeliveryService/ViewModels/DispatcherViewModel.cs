@@ -51,17 +51,20 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private Order _selectedOrder;
         /// <summary>
-        /// Выбранный заказ
+        /// Выбранный курьер
         /// </summary>
-        /// 
-
-
         private Courier _selectedCourier;
+        /// <summary>
+        /// Выбранный курьер
+        /// </summary>
         public Courier SelectedCourier
         {
             get => _selectedCourier;
             set => SetProperty(ref _selectedCourier, value);
         }
+        /// <summary>
+        /// Выбранный Заказ
+        /// </summary>
         public Order SelectedOrder
         {
             get => _selectedOrder;
