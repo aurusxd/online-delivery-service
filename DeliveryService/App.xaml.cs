@@ -52,13 +52,13 @@ namespace DeliveryService
             services.AddTransient<ListCouriersView>();
             services.AddTransient<OrdersListView>();
             services.AddTransient<NewOrderView>();
-            services.AddTransient<RegistrationCourier>();
+            services.AddTransient<DispatcherView>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var win = Services.GetRequiredService<RegistrationCourier>();
+            var win = Services.GetRequiredService<DispatcherView>();
             win.Show();
         }
     }
