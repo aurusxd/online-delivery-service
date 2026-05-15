@@ -1,6 +1,8 @@
 ﻿using DeliveryService.Commands;
 using DeliveryService.Models;
 using DeliveryService.Services;
+using DeliveryService.Views;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -98,7 +100,7 @@ namespace DeliveryService.ViewModels
         /// </summary>
         public ICommand ToggleOnlineCommand { get; }
         /// <summary>
-        /// Команда добавления нового курьера (должна вызывать новое окно?)
+        /// Команда открытия окна регистрации курьера
         /// </summary>
         public ICommand AddCourierCommand { get; }
 
@@ -121,6 +123,8 @@ namespace DeliveryService.ViewModels
                 },
                 canExecute: _ => !IsBusy
             );
+
+            AddCourierCommand = new RelayCommand(OpenRegistrationCourier);
 
             LoadCouriersCommand.Execute(null);
         }
@@ -162,6 +166,16 @@ namespace DeliveryService.ViewModels
                 await Task.Delay(3000);
                 ErrorMessage = null;
             }
+        }
+
+        /// <summary>
+        /// Открытие окна регистрации нового курьера
+        /// </summary>
+        private void OpenRegistrationCourier()
+        {
+            var win = App.Services.GetRequiredService<RegistrationCourier>();
+            if (win.ShowDialog() == true)
+                LoadCouriersCommand.Execute(null);
         }
     }
 }

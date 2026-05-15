@@ -1,0 +1,53 @@
+﻿using DeliveryService.Commands;
+using DeliveryService.Services;
+using System.Windows.Input;
+
+namespace DeliveryService.ViewModels
+{
+    /// <summary>
+    /// Логика взаимодействия пользователя с MainWindow
+    /// </summary>
+    public class MainWindowModel : BaseViewModel
+    {
+        private readonly WindowsService _windowsService;
+
+        /// <summary>
+        /// Команда открытия
+        /// </summary>
+        public ICommand OpenOrderListCommand { get; }
+        /// <summary>
+        /// Команда открытия OrderListView
+        /// </summary>
+        public ICommand OpenListCouriersCommand { get; }
+        /// <summary>
+        /// Команда открытия ListCouriersView
+        /// </summary>
+        public ICommand OpenDispatcherCommand { get; }
+        /// <summary>
+        /// Команда открытия NewOrderView
+        /// </summary>
+        public ICommand OpenNewOrderCommand { get; }
+        /// <summary>
+        /// Команда открытия RegistrationCouriers
+        /// </summary>
+        public ICommand OpenRegistrationCourierCommand { get; }
+
+
+        public MainWindowModel(WindowsService windowsService)
+        {
+            _windowsService = windowsService;
+
+            OpenOrderListCommand = new RelayCommand(() => _windowsService.OpenOrderList());
+            OpenListCouriersCommand = new RelayCommand(() => _windowsService.OpenListCouriers());
+            OpenDispatcherCommand = new RelayCommand(() => _windowsService.OpenDispatcher());
+
+            // Эти потом можно изменить с проверками DialogResult
+            OpenNewOrderCommand = new RelayCommand(() => {
+                _windowsService.OpenNewOrder();
+            });
+            OpenRegistrationCourierCommand = new RelayCommand(() => { 
+                _windowsService.OpenRegistrationCourier();
+            });
+        }
+    }
+}
