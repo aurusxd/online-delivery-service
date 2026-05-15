@@ -239,6 +239,8 @@ namespace DeliveryService.ViewModels
 
             if (!ValidateProperty())
                 return;
+
+            #region На данный момент этот регион работает с ошибками
             //if (!ValidatePhoneNumber())
             //    return;
 
@@ -247,6 +249,8 @@ namespace DeliveryService.ViewModels
             //    ErrorMessage = "Номер телефона должен содержать только цифры";
             //    return;
             //}
+            #endregion
+
             if (!int.TryParse(ClientPhone, out int phoneNumber))
             {
                 ErrorMessage = "Номер телефона должен содержать только цифры";

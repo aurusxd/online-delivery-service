@@ -38,6 +38,26 @@ namespace DeliveryService.Services
         public async Task<List<Courier>> GetFreeCouriersAsync() => await _courierRepository.GetFreeCouriers();
 
         /// <summary>
+        /// Добавление курьера в базу данных
+        /// </summary>
+        /// <param name="courier">Курьер</param>
+        /// <returns>Прошла ли операция</returns>
+        public async Task<bool> AddCourierAsync(Courier courier)
+        {
+            if (courier == null)
+                return false;
+
+            courier.IsActive = true;
+            courier.Created_At = DateTime.UtcNow;
+
+            courier.Current_Lat = 0.0;
+            courier.Current_Lon = 0.0;
+
+            await _courierRepository.AddAsync(courier);
+            return true;
+        }
+
+        /// <summary>
         /// Назначение курьера на заказ
         /// </summary>
         /// <param name="courierId">ID курьера</param>

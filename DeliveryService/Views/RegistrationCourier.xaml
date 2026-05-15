@@ -30,6 +30,7 @@
                        FontSize="18"
                        Margin="0,0,0,5" HorizontalAlignment="Center"/>
             <TextBox Name="NameTextBox"
+                     Text="{Binding CourierName}"
                      FontSize="18" 
                      Height="35"
                      Width="300"
@@ -43,7 +44,7 @@
                        FontSize="18"
                        Margin="0,0,0,5" HorizontalAlignment="Center"/>
             <TextBox Name="PhoneTextBox"
-                     Text="+7"
+                     Text="{Binding CourierPhone}"
                      FontSize="18" 
                      Height="35"
                      Width="300"
@@ -57,6 +58,7 @@
                        FontSize="18"
                        Margin="0,0,0,5" HorizontalAlignment="Center"/>
             <TextBox Name="TransportTextBox"
+                     Text="{Binding VehicleType}"
                      FontSize="18" 
                      Height="35"
                      Width="300"
@@ -68,6 +70,7 @@
         <Button Grid.Row="4" 
                 Name="RegisterButton"
                 Content="Зарегистрироваться"
+                Command="{Binding SaveCommand}"
                 Height="45"
                 Width="220"
                 FontSize="16"
