@@ -4,6 +4,7 @@ using DeliveryService.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Threading;
@@ -46,6 +47,31 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private int _completedOrderCount;
         /// <summary>
+        /// Выбранный заказ
+        /// </summary>
+        private Order _selectedOrder;
+        /// <summary>
+        /// Выбранный курьер
+        /// </summary>
+        private Courier _selectedCourier;
+        /// <summary>
+        /// Выбранный курьер
+        /// </summary>
+        public Courier SelectedCourier
+        {
+            get => _selectedCourier;
+            set => SetProperty(ref _selectedCourier, value);
+        }
+        /// <summary>
+        /// Выбранный Заказ
+        /// </summary>
+        public Order SelectedOrder
+        {
+            get => _selectedOrder;
+            set => SetProperty(ref _selectedOrder, value);
+        }
+
+        /// <summary>
         /// Список активных заказов
         /// </summary>
         public ObservableCollection<Order> ActiveOrders { get; }
@@ -53,6 +79,11 @@ namespace DeliveryService.ViewModels
         /// Список курьеров, которые онлайн
         /// </summary>
         public ObservableCollection<Courier> OnlineCouriers { get; }
+
+        /// <summary>
+        /// Список свободных курьеров, которые онлайн
+        /// </summary>
+        public ObservableCollection<Courier> FreeCouriers { get; }
 
         // ВАЖНО: Поменять названия статусов в комментариях
         /// <summary>
@@ -85,6 +116,28 @@ namespace DeliveryService.ViewModels
         /// </summary>
         public ICommand LoadDataCommand { get; }
 
+        /// <summary>
+        /// Команда назначения курьера на заказ
+        /// </summary>
+        public ICommand AssignCourierCommand { get; }
+        /// <summary>
+        /// Команда для выбора заказа
+        /// </summary>
+        public ICommand SelectOrderCommand { get; }
+
+        /// <summary>
+        /// Команда для выбора курьера
+        /// </summary>
+        public ICommand SelectCourierCommand { get; }
+
+        /// <summary>
+        /// Событие, которое вызывается при выборе заказа 
+        /// </summary>
+        public event Action<Order>? OrderSelected;
+        /// <summary>
+        /// Событие, которое вызывается при выборе курьера 
+        /// </summary>
+        public event Action<double,double,double,double>? CourierSelected;
 
         public DispatcherViewModel(OrderService orderService, CourierService courierService)
         {
@@ -93,6 +146,7 @@ namespace DeliveryService.ViewModels
 
             ActiveOrders = new ObservableCollection<Order>();
             OnlineCouriers = new ObservableCollection<Courier>();
+            FreeCouriers = new ObservableCollection<Courier>();
 
             LoadDataCommand = new RelayCommandAsync(
                 execute: () => TryRunTaskAsync(LoadDataAsync, "Ошибка загрузки"),
@@ -101,9 +155,51 @@ namespace DeliveryService.ViewModels
 
             LoadDataCommand.Execute(null);
 
+
+
+            AssignCourierCommand = new RelayCommandAsync(async order =>
+            {
+                if (SelectedCourier == null || order == null) return;
+                Order ord = (Order)order;
+                bool success = await _courierService.AssignCourierToOrderAsync(SelectedCourier.Id, ord.Id);
+                if (success) await LoadDataAsync();
+            });
+
+            SelectOrderCommand = new RelayCommandAsync(async order =>
+            {
+                if (order == null) return;
+                SelectedOrder = (Order)order;
+                OrderSelected?.Invoke((Order)order);
+            });
+
+
+            SelectCourierCommand = new RelayCommandAsync(async parameter =>
+            {
+                if (parameter is not Courier courier)
+                    return;
+                SelectedCourier = courier;
+
+                SelectedOrder = await _orderService
+                    .FindOrderByCourierIdAsync(courier.Id);
+
+                if (SelectedOrder == null) return;
+                if (SelectedCourier == null) return;
+
+                double startLat = courier.Current_Lat;
+                double startLon = courier.Current_Lon;
+
+                bool courierAtPickup =
+                Math.Abs(courier.Current_Lat - SelectedOrder.Lat_From) < 0.00001 &&
+                Math.Abs(courier.Current_Lon - SelectedOrder.Lon_From) < 0.00001;
+
+                double endLat = courierAtPickup ? SelectedOrder.Lat_To : SelectedOrder.Lat_From;
+                double endLon = courierAtPickup ? SelectedOrder.Lon_To : SelectedOrder.Lon_From;
+
+                CourierSelected?.Invoke(startLat, startLon, endLat, endLon);
+            });
+
             InitializeTimer();
         }
-
 
         /// <summary>
         /// Загрузка данных о заказах
@@ -138,6 +234,32 @@ namespace DeliveryService.ViewModels
                 return;
             }
         }
+        /// <summary>
+        /// Загрузка свободных курьеров
+        /// </summary>
+        /// <returns></returns>
+        private async Task LoadFreeCouriersAsync()
+        {
+            var freeCouriers = await _courierService.GetFreeCouriersAsync();
+            if (freeCouriers == null)
+                return;
+
+            var onlineCouriers = freeCouriers.Where(c => c.IsActive).ToList();
+
+            FreeCouriers.Clear();
+            foreach (var courier in onlineCouriers)
+                FreeCouriers.Add(courier);
+;
+
+        }
+
+        /// <summary>
+        /// Назначение курьера на заказ
+        /// </summary>
+        /// <param name="courierId">Айди курьера</param>
+        /// <param name="orderId">Айди заказа</param>
+        /// <returns></returns>
+        public async Task AssignCourier(int courierId, int orderId) => await _courierService.AssignCourierToOrderAsync(courierId, orderId);
 
         /// <summary>
         /// Загрузка данных об курьерах
@@ -162,6 +284,7 @@ namespace DeliveryService.ViewModels
         {
             await LoadOrdersAsync();
             await LoadCouriersAsync();
+            await LoadFreeCouriersAsync();
         }
 
         /// <summary>
