@@ -39,6 +39,7 @@ namespace DeliveryService.Utils
 
                 <script>
                     var map;
+                    var courierMark = null;
                     ymaps.ready(function () {
                         map = new ymaps.Map("map", {
                             center: [55.0415, 82.9346],
@@ -62,39 +63,47 @@ namespace DeliveryService.Utils
                         });
                     });
 
+                    function clearObjects()
+                    {
+                        map.geoObjects.removeAll(); 
+                    }
 
                     function DrawRoute(startLat,startLon,endLat,endLon)
-                    {
-                        map.geoObjects.removeAll();
+                    { 
                        console.log("DrawRoute вызван:", startLat, startLon, endLat, endLon);
                         ymaps.route([
                             [startLat, startLon],
                             [endLat, endLon],
                         ]).then(function(route) {
                             console.log("Маршрут построен, добавляем на карту");
+
                             map.geoObjects.add(route);
                         }).catch(function(err) {
                             console.log("Ошибка:", err);
                         });
                     }
-                    function AddMark(Lat,Lon)
+                    function AddMark(lat,lon)
                     {
 
-            
-                        console.log("AddMark вызван:", Lat,Lon);
-                        var marker = new ymaps.Placemark(
+                    courierMarker = new ymaps.Placemark(
                         [lat, lon],
                         {
                             balloonContent: 'Курьер'
                         },
                         {
-                            preset: 'islands#blueDeliveryIcon',
+                            iconLayout: 'default#imageWithContent',
+                            iconImageHref: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                            iconImageSize: [36, 36],
+                            iconImageOffset: [-18, -36],
+                            iconContentLayout: ymaps.templateLayoutFactory.createClass(
+                                '<div style="color:white;background:#2563EB;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-weight:bold;border:2px solid white;">К</div>'
+                            ),
                             zIndex: 9999,
-                            iconOffset: [0, -20]
+                            zIndexActive: 10000
                         }
                     );
 
-                    map.geoObjects.add(marker);
+                    map.geoObjects.add(courierMarker);
                     }
 
                 </script>

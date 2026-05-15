@@ -24,11 +24,17 @@ namespace DeliveryService.Views
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await MapInitializer.Initialize(Map);
+            Map.CoreWebView2.OpenDevToolsWindow();
   
             if (DataContext is DispatcherViewModel vm)
             {
                 vm.OrderSelected += async order =>
                 {
+
+                    await Map.CoreWebView2.ExecuteScriptAsync(
+                        "clearObjects()"
+                        );
+
                     await Map.CoreWebView2.ExecuteScriptAsync(
                         string.Format(
                             CultureInfo.InvariantCulture,
@@ -39,16 +45,20 @@ namespace DeliveryService.Views
                 vm.CourierSelected += async (Lat_From,Lan_From,Lat_To,Lan_To) =>
                 {
                     await Map.CoreWebView2.ExecuteScriptAsync(
+                        "clearObjects()"
+                        );
+
+                    await Map.CoreWebView2.ExecuteScriptAsync(
                         string.Format(
                             CultureInfo.InvariantCulture,
                             "DrawRoute({0}, {1}, {2}, {3})",
                             Lat_From, Lan_From, Lat_To, Lan_To));
 
-                    //await Map.CoreWebView2.ExecuteScriptAsync(
-                    //string.Format(
-                    //    CultureInfo.InvariantCulture,
-                    //    "AddMark({0}, {1})",
-                    //    courier.Current_Lat,courier.Current_Lon));
+                    await Map.CoreWebView2.ExecuteScriptAsync(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "AddMark({0}, {1})",
+                        Lat_From, Lan_From));
                 };
             }
         }
