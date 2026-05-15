@@ -64,7 +64,7 @@
                      VerticalContentAlignment="Center"/>
         </StackPanel>
 
-        
+
         <Button Grid.Row="4" 
                 Name="RegisterButton"
                 Content="Зарегистрироваться"
@@ -73,6 +73,5 @@
                 FontSize="16"
                 HorizontalAlignment="Center"
                 Style="{StaticResource PrimaryButton}"/>
-
     </Grid>
 </Window>
