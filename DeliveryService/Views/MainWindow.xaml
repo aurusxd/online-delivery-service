@@ -151,7 +151,7 @@
                             <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8" Padding="12,10">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="➕" FontSize="18" Width="32" Foreground="#2563EB"/>
-                                    <TextBlock Text="Регистрация курера" FontSize="14" Margin="8,0,0,0" 
+                                    <TextBlock Text="Регистрация курьера" FontSize="14" Margin="8,0,0,0" 
                                         Foreground="#2563EB" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Border>

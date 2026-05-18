@@ -31,15 +31,19 @@ namespace DeliveryService.ViewModels
         /// Команда открытия RegistrationCouriers
         /// </summary>
         public ICommand OpenRegistrationCourierCommand { get; }
+        /// <summary>
+        /// Команда закрытия всех открытых немодальных окон
+        /// </summary>
+        public ICommand CloseWindowsCommand { get; }
 
 
         public MainWindowModel(WindowsService windowsService)
         {
             _windowsService = windowsService;
 
-            OpenDispatcherCommand = new RelayCommand(() => _windowsService.OpenDispatcher());
-            OpenOrderListCommand = new RelayCommand(() => _windowsService.OpenOrderList());
-            OpenListCouriersCommand = new RelayCommand(() => _windowsService.OpenListCouriers());
+            OpenDispatcherCommand = new RelayCommand(_windowsService.OpenDispatcher);
+            OpenOrderListCommand = new RelayCommand(_windowsService.OpenOrderList);
+            OpenListCouriersCommand = new RelayCommand(_windowsService.OpenListCouriers);
 
             // Эти потом можно изменить с проверками DialogResult
             OpenNewOrderCommand = new RelayCommand(() => {
@@ -48,6 +52,8 @@ namespace DeliveryService.ViewModels
             OpenRegistrationCourierCommand = new RelayCommand(() => { 
                 _windowsService.OpenRegistrationCourier();
             });
+
+            CloseWindowsCommand = new RelayCommand(_windowsService.CloseWindows);
         }
     }
 }

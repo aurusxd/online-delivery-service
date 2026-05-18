@@ -75,5 +75,20 @@ namespace DeliveryService.Services
         /// </summary>
         /// <returns>Результат работы окна - DialogResult</returns>
         public bool? OpenRegistrationCourier() => OpenModalWindow<RegistrationCourier>();
+
+        /// <summary>
+        /// Закрытие всех немодальных окон
+        /// </summary>
+        public void CloseWindows()
+        {
+            var openedWindows = _openedWindows.Values.ToList();
+            foreach (var window in openedWindows)
+            {
+                if (window.IsVisible)
+                    window.Close();
+            }
+
+            _openedWindows.Clear();
+        }
     }
 }
