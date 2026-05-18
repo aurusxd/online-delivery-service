@@ -1,5 +1,6 @@
 ﻿using DeliveryService.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace DeliveryService.Services
 {
@@ -9,55 +10,70 @@ namespace DeliveryService.Services
     public class WindowsService
     {
         private readonly IServiceProvider _services;
+        /// <summary>
+        /// Словарь открытых, не модальных, окон
+        /// </summary>
+        private readonly Dictionary<Type, Window> _openedWindows;
 
 
         public WindowsService(IServiceProvider services)
         {
             _services = services;
+            _openedWindows = new Dictionary<Type, Window>();
         }
 
 
         /// <summary>
-        /// Открытие OrderListView
+        /// Открытие окна
         /// </summary>
-        public void OpenOrderList()
+        /// <typeparam name="TView">Класс открываемого окна</typeparam>
+        private void OpenWindow<TView>() where TView : Window
         {
-            var win = _services.GetRequiredService<OrdersListView>();
+            var type = typeof(TView);
+
+            if (_openedWindows.TryGetValue(type, out var window) && window.IsVisible)
+            {
+                window.Activate();
+                return;
+            }
+
+            var win = _services.GetRequiredService<TView>();
+            win.Closed += (s, e) => _openedWindows.Remove(type);
             win.Show();
+            _openedWindows[type] = win;
         }
         /// <summary>
-        /// Открытие ListCouriersView
+        /// Открытие окна как модальное
         /// </summary>
-        public void OpenListCouriers()
+        /// <typeparam name="TView">Класс открываемого окна</typeparam>
+        /// <returns>Результат работы окна - DialogResult</returns>
+        private bool? OpenModalWindow<TView>() where TView : Window
         {
-            var win = _services.GetRequiredService<ListCouriersView>();
-            win.Show();
+            var win = _services.GetRequiredService<TView>();
+            return win.ShowDialog();
         }
+
         /// <summary>
         /// Открытие DispatcherView
         /// </summary>
-        public void OpenDispatcher()
-        {
-            var win = _services.GetRequiredService<DispatcherView>();
-            win.Show();
-        }
+        public void OpenDispatcher() => OpenWindow<DispatcherView>();
+        /// <summary>
+        /// Открытие OrderListView
+        /// </summary>
+        public void OpenOrderList() => OpenWindow<OrdersListView>();
+        /// <summary>
+        /// Открытие ListCouriersView
+        /// </summary>
+        public void OpenListCouriers() => OpenWindow<ListCouriersView>();
         /// <summary>
         /// Открытие NewOrderView
         /// </summary>
         /// <returns>Результат работы окна - DialogResult</returns>
-        public bool? OpenNewOrder()
-        {
-            var win = _services.GetRequiredService<NewOrderView>();
-            return win.ShowDialog();
-        }
+        public bool? OpenNewOrder() => OpenModalWindow<NewOrderView>();
         /// <summary>
         /// Открытие RegistrationCourier
         /// </summary>
         /// <returns>Результат работы окна - DialogResult</returns>
-        public bool? OpenRegistrationCourier()
-        {
-            var win = _services.GetRequiredService<RegistrationCourier>();
-            return win.ShowDialog();
-        }
+        public bool? OpenRegistrationCourier() => OpenModalWindow<RegistrationCourier>();
     }
 }

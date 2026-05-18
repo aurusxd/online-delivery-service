@@ -12,17 +12,17 @@ namespace DeliveryService.ViewModels
         private readonly WindowsService _windowsService;
 
         /// <summary>
-        /// Команда открытия
+        /// Команда открытия DispatcherView
         /// </summary>
-        public ICommand OpenOrderListCommand { get; }
+        public ICommand OpenDispatcherCommand { get; }
         /// <summary>
         /// Команда открытия OrderListView
         /// </summary>
-        public ICommand OpenListCouriersCommand { get; }
+        public ICommand OpenOrderListCommand { get; }
         /// <summary>
         /// Команда открытия ListCouriersView
         /// </summary>
-        public ICommand OpenDispatcherCommand { get; }
+        public ICommand OpenListCouriersCommand { get; }
         /// <summary>
         /// Команда открытия NewOrderView
         /// </summary>
@@ -37,9 +37,9 @@ namespace DeliveryService.ViewModels
         {
             _windowsService = windowsService;
 
+            OpenDispatcherCommand = new RelayCommand(() => _windowsService.OpenDispatcher());
             OpenOrderListCommand = new RelayCommand(() => _windowsService.OpenOrderList());
             OpenListCouriersCommand = new RelayCommand(() => _windowsService.OpenListCouriers());
-            OpenDispatcherCommand = new RelayCommand(() => _windowsService.OpenDispatcher());
 
             // Эти потом можно изменить с проверками DialogResult
             OpenNewOrderCommand = new RelayCommand(() => {
