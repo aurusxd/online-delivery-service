@@ -60,7 +60,7 @@ namespace DeliveryService
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var win = Services.GetRequiredService<RegistrationCourier>();
+            var win = Services.GetRequiredService<DispatcherView>();
             win.Show();
         }
     }
