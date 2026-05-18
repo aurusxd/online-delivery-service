@@ -13,6 +13,7 @@ namespace DeliveryService.ViewModels
     /// </summary>
     public class ListCouriersViewModel : BaseViewModel
     {
+        private readonly WindowsService _windowsService;
         private readonly CourierService _courierService;
 
         /// <summary>
@@ -105,9 +106,11 @@ namespace DeliveryService.ViewModels
         public ICommand AddCourierCommand { get; }
 
 
-        public ListCouriersViewModel(CourierService courierService)
+        public ListCouriersViewModel(WindowsService windowsService, CourierService courierService)
         {
+            _windowsService = windowsService;
             _courierService = courierService;
+
             Couriers = new ObservableCollection<Courier>();
 
             LoadCouriersCommand = new RelayCommandAsync(
@@ -124,7 +127,11 @@ namespace DeliveryService.ViewModels
                 canExecute: _ => !IsBusy
             );
 
-            AddCourierCommand = new RelayCommand(OpenRegistrationCourier);
+            //AddCourierCommand = new RelayCommand(OpenRegistrationCourier);
+            AddCourierCommand = new RelayCommand(() => {
+                if (_windowsService.OpenRegistrationCourier() == true)
+                    LoadCouriersCommand.Execute(null);
+            });
 
             LoadCouriersCommand.Execute(null);
         }
