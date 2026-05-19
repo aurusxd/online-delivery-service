@@ -1,79 +1,7 @@
 ﻿<Window x:Class="DeliveryService.Views.MenuView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DeliveryService.Views"
-        mc:Ignorable="d" Title="MenuView" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <Style x:Key="CategoryChipStyle" TargetType="Button">
-            <Setter Property="Background" Value="#F3F4F6"/>
-            <Setter Property="Foreground" Value="#1F2937"/>
-            <Setter Property="Padding" Value="16,8"/>
-            <Setter Property="Margin" Value="0,0,8,8"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="18" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E5E7EB"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="RoundAddButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#2563EB"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="16" Padding="16,0" RenderTransformOrigin="0.5,0.5">
-                            <Border.RenderTransform>
-                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
-                            </Border.RenderTransform>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#1D4ED8"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#1E40AF"/>
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="0.95" Duration="0:0:0.05"/>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="0.95" Duration="0:0:0.05"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.0" Duration="0:0:0.05"/>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.0" Duration="0:0:0.05"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+        Title="MenuView" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Grid Background="#F9FAFB" Margin="20">
         <Grid.ColumnDefinitions>
@@ -85,135 +13,74 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Style="{StaticResource FieldLabel}" Text="Меню" FontSize="28" Margin="5,0,0,15" Foreground="#111827"/>
+                <TextBlock Grid.Row="0" Text="Меню" FontSize="28" FontWeight="Bold" Margin="5,0,0,15" Foreground="#111827"/>
 
                 <WrapPanel Grid.Row="1" Margin="5,0,0,15">
-                    <Button Content="Готовая еда" Style="{StaticResource CategoryChipStyle}"/>
-                    <Button Content="Хлеб и выпечка" Style="{StaticResource CategoryChipStyle}"/>
-                    <Button Content="Напитки" Style="{StaticResource CategoryChipStyle}"/>
-                    <Button Content="Десерты" Style="{StaticResource CategoryChipStyle}"/>
+                    <Button Content="Готовая еда" Style="{StaticResource CategoryButtonStyle}"/>
+                    <Button Content="Хлеб и выпечка" Style="{StaticResource CategoryButtonStyle}"/>
+                    <Button Content="Напитки" Style="{StaticResource CategoryButtonStyle}"/>
+                    <Button Content="Десерты" Style="{StaticResource CategoryButtonStyle}"/>
                 </WrapPanel>
 
                 <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <WrapPanel Margin="0,0,10,0">
+                    <ListView ItemsSource="{Binding MenuItems}" 
+                              Background="Transparent" 
+                              BorderThickness="0" 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                        <Border Width="190" Height="290" Background="White" BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="24" Margin="10,10,10,15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="130"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" Background="#F3F4F6" CornerRadius="18" Margin="12,12,12,0" ClipToBounds="True">
-                                    <Image Source="/DeliveryService;component/Images/plov.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="190" Height="290" Background="White" BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="24" Margin="10,10,10,15">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="130"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Background="#F3F4F6" CornerRadius="18" Margin="12,12,12,0" ClipToBounds="True">
+                                            <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
+                                        </Border>
+                                        <StackPanel Grid.Row="1" Margin="15,10,15,0">
+                                            <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="Bold" Foreground="#111827"/>
+                                            <TextBlock Text="{Binding Weight}" FontSize="12" Foreground="#9CA3AF"/>
+                                        </StackPanel>
+                                        <Grid Grid.Row="2" Margin="15,0,12,15" VerticalAlignment="Bottom">
+                                            <TextBlock Text="{Binding Price}" FontSize="18" FontWeight="Bold" Foreground="#111827"/>
+                                            <Button Content="Добавить" Style="{StaticResource PrimaryButton}" Height="32" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </Grid>
                                 </Border>
-                                <StackPanel Grid.Row="1" Margin="15,10,15,0">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="Плов с курицей" FontSize="15" FontWeight="Bold" Foreground="#111827" TextWrapping="Wrap"/>
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="250 г" FontSize="12" Foreground="#9CA3AF" Margin="0,2,0,0"/>
-                                </StackPanel>
-                                <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="15,0,12,15">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="249 руб" FontSize="18" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
-                                    <Button Content="Добавить" Height="32" HorizontalAlignment="Right" Style="{StaticResource RoundAddButtonStyle}"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-
-                        <Border Width="190" Height="290" Background="White" BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="24" Margin="10,10,10,15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="130"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" Background="#F3F4F6" CornerRadius="18" Margin="12,12,12,0" ClipToBounds="True">
-                                    <Image Source="/DeliveryService;component/Images/croissant.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Row="1" Margin="15,10,15,0">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="Круассан классический" FontSize="15" FontWeight="Bold" Foreground="#111827" TextWrapping="Wrap"/>
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="60 г" FontSize="12" Foreground="#9CA3AF" Margin="0,2,0,0"/>
-                                </StackPanel>
-                                <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="15,0,12,15">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="89 руб" FontSize="18" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
-                                    <Button Content="Добавить" Height="32" HorizontalAlignment="Right" Style="{StaticResource RoundAddButtonStyle}"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-
-                        <Border Width="190" Height="290" Background="White" BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="24" Margin="10,10,10,15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="130"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" Background="#F3F4F6" CornerRadius="18" Margin="12,12,12,0" ClipToBounds="True">
-                                    <Image Source="/DeliveryService;component/Images/coffee.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Row="1" Margin="15,10,15,0">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="Капучино" FontSize="15" FontWeight="Bold" Foreground="#111827" TextWrapping="Wrap"/>
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="300 мл" FontSize="12" Foreground="#9CA3AF" Margin="0,2,0,0"/>
-                                </StackPanel>
-                                <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="15,0,12,15">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="149 руб" FontSize="18" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
-                                    <Button Content="Добавить" Height="32" HorizontalAlignment="Right" Style="{StaticResource RoundAddButtonStyle}"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-
-                        <Border Width="190" Height="290" Background="White" BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="24" Margin="10,10,10,15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="130"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" Background="#F3F4F6" CornerRadius="18" Margin="12,12,12,0" ClipToBounds="True">
-                                    <Image Source="/DeliveryService;component/Images/cheesecake.png" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Row="1" Margin="15,10,15,0">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="Чизкейк Нью-Йорк" FontSize="15" FontWeight="Bold" Foreground="#111827" TextWrapping="Wrap"/>
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="100 г" FontSize="12" Foreground="#9CA3AF" Margin="0,2,0,0"/>
-                                </StackPanel>
-                                <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="15,0,12,15">
-                                    <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="179 руб" FontSize="18" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
-                                    <Button Content="Добавить" Height="32" HorizontalAlignment="Right" Style="{StaticResource RoundAddButtonStyle}"/>
-                                </Grid>
-                            </Grid>
-                        </Border>
-
-                    </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </ScrollViewer>
             </Grid>
         </Border>
 
         <Border Grid.Column="1" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="24" Padding="25" Background="White">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" Style="{StaticResource FieldLabel}" Text="Корзина" FontSize="28" Margin="5,0,0,15" Foreground="#111827"/>
-
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Style="{StaticResource TextBlockStyle}" Background="Transparent" Text="В корзине пока пусто" FontSize="14" Foreground="#9CA3AF"/>
-                    </StackPanel>
-                </ScrollViewer>
-
-                <Button Grid.Row="2" Content="Перейти к оплате" Style="{StaticResource PrimaryButton}" Height="50" HorizontalAlignment="Stretch" Margin="0,20,0,0">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="25"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
+            <TextBlock Text="Корзина" FontSize="28" FontWeight="Bold" Foreground="#111827"/>
         </Border>
     </Grid>
 </Window>
