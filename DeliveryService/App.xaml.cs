@@ -38,10 +38,13 @@ namespace DeliveryService
             services.AddScoped<OrderRepository>();
             services.AddScoped<CourierRepository>();
             services.AddScoped<ClientRepository>();
+            services.AddScoped<FoodCategoryRepository>();
+            services.AddScoped<FoodRepository>();
             // Сервисы
             services.AddScoped<WindowsService>();
             services.AddScoped<OrderService>();
             services.AddScoped<CourierService>();
+            services.AddScoped<FoodCategoryService>();
 
             // ViewModels
             services.AddTransient<MainWindowModel>();
