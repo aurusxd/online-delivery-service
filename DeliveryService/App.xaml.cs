@@ -39,10 +39,12 @@ namespace DeliveryService
             services.AddScoped<CourierRepository>();
             services.AddScoped<ClientRepository>();
             // Сервисы
+            services.AddScoped<WindowsService>();
             services.AddScoped<OrderService>();
             services.AddScoped<CourierService>();
 
             // ViewModels
+            services.AddTransient<MainWindowModel>();
             services.AddTransient<ListCouriersViewModel>();
             services.AddTransient<OrderListViewModel>();
             services.AddTransient<NewOrderViewModel>();
@@ -50,6 +52,7 @@ namespace DeliveryService
             services.AddTransient<DispatcherViewModel>();
 
             // View
+            services.AddTransient<MainWindow>();
             services.AddTransient<ListCouriersView>();
             services.AddTransient<OrdersListView>();
             services.AddTransient<NewOrderView>();
@@ -60,7 +63,7 @@ namespace DeliveryService
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var win = Services.GetRequiredService<RegistrationCourier>();
+            var win = Services.GetRequiredService<MainWindow>();
             win.Show();
         }
     }

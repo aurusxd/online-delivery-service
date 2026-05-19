@@ -15,6 +15,7 @@ namespace DeliveryService.ViewModels
     /// </summary>
     public class OrderListViewModel : BaseViewModel
     {
+        private readonly WindowsService _windowsService;
         private readonly OrderService _orderService;
 
         /// <summary>
@@ -90,9 +91,11 @@ namespace DeliveryService.ViewModels
         public ICommand AddOrderCommand { get; }
 
 
-        public OrderListViewModel(OrderService orderService)
+        public OrderListViewModel(WindowsService windowsService, OrderService orderService)
         {
+            _windowsService = windowsService;
             _orderService = orderService;
+
             Orders = new ObservableCollection<OrderDTO>();
 
             LoadOrdersCommand = new RelayCommandAsync(
@@ -100,7 +103,11 @@ namespace DeliveryService.ViewModels
                 canExecute: () => !IsBusy
             );
 
-            AddOrderCommand = new RelayCommand(OpenAddOrderWindow);
+            //AddOrderCommand = new RelayCommand(OpenAddOrderWindow);
+            AddOrderCommand = new RelayCommand(() => {
+                if (_windowsService.OpenNewOrder() == true)
+                    LoadOrdersCommand.Execute(null);
+            });
 
             LoadOrdersCommand.Execute(null);
         }
