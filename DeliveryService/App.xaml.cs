@@ -45,6 +45,7 @@ namespace DeliveryService
             services.AddScoped<OrderService>();
             services.AddScoped<CourierService>();
             services.AddScoped<FoodCategoryService>();
+            services.AddScoped<FoodService>();
 
             // ViewModels
             services.AddTransient<MainWindowModel>();
