@@ -1,4 +1,5 @@
-﻿using DeliveryService.Models;
+﻿using DeliveryService.DTO;
+using DeliveryService.Models;
 using DeliveryService.Utils;
 using DeliveryService.ViewModels;
 using Microsoft.Web.WebView2.Core;
@@ -19,6 +20,23 @@ namespace DeliveryService.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+            MapInitializer.CoordinatesRoute += RouteSimulate;
+        }
+
+        public async Task RouteSimulate(List<List<double>> points)
+        {
+            foreach (var point in points)
+            {
+
+                await Map.CoreWebView2.ExecuteScriptAsync(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "MoveCourier({0}, {1})",
+                        point[0],
+                        point[1]));
+
+                await Task.Delay(300);
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,5 +80,7 @@ namespace DeliveryService.Views
                 };
             }
         }
+
+
     }
 }

@@ -14,6 +14,7 @@ namespace DeliveryService.Utils
         /// Событие при выборе адреса на карте
         /// </summary>
         public static event Action<double, double, string>? AddressSelected;
+        public static event Func<List<List<double>>, Task>? CoordinatesRoute;
 
         public static async Task Initialize(WebView2 MapWebView)
         {
@@ -40,6 +41,8 @@ namespace DeliveryService.Utils
                 <script>
                     var map;
                     var courierMark = null;
+                    const routes = []
+
                     ymaps.ready(function () {
                         map = new ymaps.Map("map", {
                             center: [55.0415, 82.9346],
@@ -78,6 +81,23 @@ namespace DeliveryService.Utils
                             console.log("Маршрут построен, добавляем на карту");
 
                             map.geoObjects.add(route);
+                            routes.push(route);
+
+                            var paths = route.getPaths();
+
+                            paths.each(function(path) {
+
+                                var coordinates = path.geometry.getCoordinates();
+                                console.log(coordinates);
+                                window.routeCoordinates = coordinates;
+                                 window.chrome.webview.postMessage({
+                                    type: "routeCoordinates",
+                                    coordinates: coordinates
+                                });
+
+                            });
+
+    
                         }).catch(function(err) {
                             console.log("Ошибка:", err);
                         });
@@ -106,6 +126,14 @@ namespace DeliveryService.Utils
                     map.geoObjects.add(courierMarker);
                     }
 
+
+                   function MoveCourier(lat, lon) {
+
+                        if (courierMarker != null) {
+                            courierMarker.geometry.setCoordinates([lat, lon]);
+                        }
+                    }
+
                 </script>
             </body>
             </html>
@@ -114,9 +142,10 @@ namespace DeliveryService.Utils
             MapWebView.CoreWebView2.WebMessageReceived += (sender, args) =>
             {
                 string json = args.WebMessageAsJson;
-
-                var list = JsonSerializer.Deserialize<AddressDTO>(json);
-                AddressSelected?.Invoke(list.lat, list.lon, list.address);
+                var routeData = JsonSerializer.Deserialize<CoordinatesDTO>(json);
+               // var list = JsonSerializer.Deserialize<AddressDTO>(json);
+                CoordinatesRoute?.Invoke(routeData.coordinates);
+                //AddressSelected?.Invoke(list.lat, list.lon, list.address);
             };
 
         MapWebView.NavigateToString(html);
