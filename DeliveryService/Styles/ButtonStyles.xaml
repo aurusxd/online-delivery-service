@@ -68,18 +68,20 @@
 
     <Style x:Key="CategoryButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="#F3F4F6"/>
-        <Setter Property="Foreground" Value="#374151"/>
+        <Setter Property="Foreground" Value="#111827"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="Margin" Value="0,0,8,8"/>
+        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="Margin" Value="0,0,10,10"/>
+        <Setter Property="MinWidth" Value="100"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" 
-                            Background="{TemplateBinding Background}" 
-                            CornerRadius="18">
+                        Background="{TemplateBinding Background}" 
+                        CornerRadius="18"
+                        Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -91,5 +93,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

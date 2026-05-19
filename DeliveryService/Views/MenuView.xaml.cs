@@ -22,14 +22,14 @@ namespace DeliveryService.Views
    
         public partial class MenuView : Window
         {
-           
-            public ObservableCollection<Product> MenuItems { get; set; }
 
-            public MenuView()
-            {
-                InitializeComponent();
+        public ObservableCollection<Product> MenuItems { get; set; }
 
-                MenuItems = new ObservableCollection<Product>
+        public MenuView()
+        {
+            InitializeComponent();
+
+            MenuItems = new ObservableCollection<Product>
             {
                 new Product { Name = "Плов с курицей", Weight = "250 г", Price = "249 руб", ImagePath = "/DeliveryService;component/Images/plov.png" },
                 new Product { Name = "Круассан", Weight = "60 г", Price = "89 руб", ImagePath = "/DeliveryService;component/Images/croissant.png" },
@@ -37,7 +37,18 @@ namespace DeliveryService.Views
                 new Product { Name = "Чизкейк", Weight = "100 г", Price = "179 руб", ImagePath = "/DeliveryService;component/Images/cheesecake.png" }
             };
 
-                DataContext = this;
-            }
+            DataContext = this;
+        }
+
+        private void ListView_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = UIElement.MouseWheelEvent,
+                Source = sender
+            };
+            ((Control)sender).RaiseEvent(eventArg);
+            e.Handled = true;
         }
     }
+}
