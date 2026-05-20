@@ -8,6 +8,7 @@ namespace DeliveryService.Models
         public int Id { get; set; }
         public int ClientId { get; set; }
         public int? CourierId { get; set; }
+        public int? BasketId { get; set; }
         public string Address_From { get; set; } = string.Empty;
         public double Lat_From { get; set; }
         public double Lon_From { get; set; }
@@ -21,6 +22,7 @@ namespace DeliveryService.Models
 
         public Client Client { get; set; } = null!;
         public Courier? Courier { get; set; }
+        public Basket? Basket { get; set; }
         public ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
         public ICollection<OrderStatusHistory> StatusHistory { get; set; } = new List<OrderStatusHistory>();
     }
