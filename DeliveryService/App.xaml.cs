@@ -40,12 +40,14 @@ namespace DeliveryService
             services.AddScoped<ClientRepository>();
             services.AddScoped<FoodCategoryRepository>();
             services.AddScoped<FoodRepository>();
+            services.AddScoped<BasketRepository>();
             // Сервисы
             services.AddScoped<WindowsService>();
             services.AddScoped<OrderService>();
             services.AddScoped<CourierService>();
             services.AddScoped<FoodCategoryService>();
             services.AddScoped<FoodService>();
+            services.AddScoped<BasketService>();
 
             // ViewModels
             services.AddTransient<MainWindowModel>();
