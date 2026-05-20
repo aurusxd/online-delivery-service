@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\cheesecake.png" />
+    <None Remove="Images\coffee.png" />
+    <None Remove="Images\croissant.png" />
+    <None Remove="Images\plov.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GMap.NET.WPF" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -25,6 +32,13 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageReference Include="System.Text.Json" Version="10.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cheesecake.png" />
+    <Resource Include="Images\coffee.png" />
+    <Resource Include="Images\croissant.png" />
+    <Resource Include="Images\plov.png" />
   </ItemGroup>
 
   <ItemGroup>
