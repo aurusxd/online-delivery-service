@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using DeliveryService.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,11 @@ namespace DeliveryService
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainWindowModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
+            Closing += (s, e) => viewModel.CloseWindowsCommand.Execute(null); 
         }
     }
 }

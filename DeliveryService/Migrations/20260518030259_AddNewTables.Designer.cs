@@ -3,6 +3,7 @@ using System;
 using DeliveryService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeliveryService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260518030259_AddNewTables")]
+    partial class AddNewTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,33 +24,6 @@ namespace DeliveryService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("DeliveryService.Models.Basket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FoodId");
-
-                    b.ToTable("Baskets");
-                });
 
             modelBuilder.Entity("DeliveryService.Models.Categories", b =>
                 {
@@ -144,19 +120,12 @@ namespace DeliveryService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -180,9 +149,6 @@ namespace DeliveryService.Migrations
                     b.Property<string>("Address_To")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int?>("BasketId")
-                        .HasColumnType("integer");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
@@ -215,8 +181,6 @@ namespace DeliveryService.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BasketId");
 
                     b.HasIndex("ClientId");
 
@@ -280,17 +244,6 @@ namespace DeliveryService.Migrations
                     b.ToTable("RoutePoints");
                 });
 
-            modelBuilder.Entity("DeliveryService.Models.Basket", b =>
-                {
-                    b.HasOne("DeliveryService.Models.Food", "Food")
-                        .WithMany("Baskets")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Food");
-                });
-
             modelBuilder.Entity("DeliveryService.Models.Food", b =>
                 {
                     b.HasOne("DeliveryService.Models.Categories", "Categories")
@@ -304,10 +257,6 @@ namespace DeliveryService.Migrations
 
             modelBuilder.Entity("DeliveryService.Models.Order", b =>
                 {
-                    b.HasOne("DeliveryService.Models.Basket", "Basket")
-                        .WithMany()
-                        .HasForeignKey("BasketId");
-
                     b.HasOne("DeliveryService.Models.Client", "Client")
                         .WithMany("Orders")
                         .HasForeignKey("ClientId")
@@ -317,8 +266,6 @@ namespace DeliveryService.Migrations
                     b.HasOne("DeliveryService.Models.Courier", "Courier")
                         .WithMany("Orders")
                         .HasForeignKey("CourierId");
-
-                    b.Navigation("Basket");
 
                     b.Navigation("Client");
 
@@ -360,11 +307,6 @@ namespace DeliveryService.Migrations
             modelBuilder.Entity("DeliveryService.Models.Courier", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("DeliveryService.Models.Food", b =>
-                {
-                    b.Navigation("Baskets");
                 });
 
             modelBuilder.Entity("DeliveryService.Models.Order", b =>
