@@ -1,6 +1,8 @@
 ﻿using DeliveryService.Commands;
 using DeliveryService.Models;
 using DeliveryService.Services;
+using DeliveryService.Views;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -11,6 +13,7 @@ namespace DeliveryService.ViewModels
     /// </summary>
     public class ListCouriersViewModel : BaseViewModel
     {
+        private readonly WindowsService _windowsService;
         private readonly CourierService _courierService;
 
         /// <summary>
@@ -98,14 +101,16 @@ namespace DeliveryService.ViewModels
         /// </summary>
         public ICommand ToggleOnlineCommand { get; }
         /// <summary>
-        /// Команда добавления нового курьера (должна вызывать новое окно?)
+        /// Команда открытия окна регистрации курьера
         /// </summary>
         public ICommand AddCourierCommand { get; }
 
 
-        public ListCouriersViewModel(CourierService courierService)
+        public ListCouriersViewModel(WindowsService windowsService, CourierService courierService)
         {
+            _windowsService = windowsService;
             _courierService = courierService;
+
             Couriers = new ObservableCollection<Courier>();
 
             LoadCouriersCommand = new RelayCommandAsync(
@@ -121,6 +126,12 @@ namespace DeliveryService.ViewModels
                 },
                 canExecute: _ => !IsBusy
             );
+
+            //AddCourierCommand = new RelayCommand(OpenRegistrationCourier);
+            AddCourierCommand = new RelayCommand(() => {
+                if (_windowsService.OpenRegistrationCourier() == true)
+                    LoadCouriersCommand.Execute(null);
+            });
 
             LoadCouriersCommand.Execute(null);
         }
@@ -162,6 +173,16 @@ namespace DeliveryService.ViewModels
                 await Task.Delay(3000);
                 ErrorMessage = null;
             }
+        }
+
+        /// <summary>
+        /// Открытие окна регистрации нового курьера
+        /// </summary>
+        private void OpenRegistrationCourier()
+        {
+            var win = App.Services.GetRequiredService<RegistrationCourier>();
+            if (win.ShowDialog() == true)
+                LoadCouriersCommand.Execute(null);
         }
     }
 }
