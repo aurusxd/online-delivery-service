@@ -1,4 +1,5 @@
-﻿using DeliveryService.Models;
+﻿using DeliveryService.DTO;
+using DeliveryService.Models;
 using DeliveryService.Utils;
 using DeliveryService.ViewModels;
 using Microsoft.Web.WebView2.Core;
@@ -19,16 +20,39 @@ namespace DeliveryService.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+            MapInitializer.CoordinatesRoute += RouteSimulate;
+        }
+
+        public async Task RouteSimulate(List<List<double>> points)
+        {
+            foreach (var point in points)
+            {
+
+                await Map.CoreWebView2.ExecuteScriptAsync(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "MoveCourier({0}, {1})",
+                        point[0],
+                        point[1]));
+
+                await Task.Delay(300);
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await MapInitializer.Initialize(Map);
+            Map.CoreWebView2.OpenDevToolsWindow();
   
             if (DataContext is DispatcherViewModel vm)
             {
                 vm.OrderSelected += async order =>
                 {
+
+                    await Map.CoreWebView2.ExecuteScriptAsync(
+                        "clearObjects()"
+                        );
+
                     await Map.CoreWebView2.ExecuteScriptAsync(
                         string.Format(
                             CultureInfo.InvariantCulture,
@@ -39,18 +63,24 @@ namespace DeliveryService.Views
                 vm.CourierSelected += async (Lat_From,Lan_From,Lat_To,Lan_To) =>
                 {
                     await Map.CoreWebView2.ExecuteScriptAsync(
+                        "clearObjects()"
+                        );
+
+                    await Map.CoreWebView2.ExecuteScriptAsync(
                         string.Format(
                             CultureInfo.InvariantCulture,
                             "DrawRoute({0}, {1}, {2}, {3})",
                             Lat_From, Lan_From, Lat_To, Lan_To));
 
-                    //await Map.CoreWebView2.ExecuteScriptAsync(
-                    //string.Format(
-                    //    CultureInfo.InvariantCulture,
-                    //    "AddMark({0}, {1})",
-                    //    courier.Current_Lat,courier.Current_Lon));
+                    await Map.CoreWebView2.ExecuteScriptAsync(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "AddMark({0}, {1})",
+                        Lat_From, Lan_From));
                 };
             }
         }
+
+
     }
 }
