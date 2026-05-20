@@ -56,6 +56,7 @@ namespace DeliveryService
             services.AddTransient<NewOrderViewModel>();
             services.AddTransient<RegistrationCourierModel>();
             services.AddTransient<DispatcherViewModel>();
+            services.AddTransient<MenuViewModel>();
 
             // View
             services.AddTransient<MainWindow>();
@@ -64,12 +65,13 @@ namespace DeliveryService
             services.AddTransient<NewOrderView>();
             services.AddTransient<RegistrationCourier>();
             services.AddTransient<DispatcherView>();
+            services.AddTransient<MenuView>();
 
             // Собираем контейнер
             Services = services.BuildServiceProvider();
 
             // Открываем главное окно - пока затычка
-            var win = Services.GetRequiredService<MainWindow>();
+            var win = Services.GetRequiredService<MenuView>();
             win.Show();
         }
     }

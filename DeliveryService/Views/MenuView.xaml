@@ -20,10 +20,23 @@
                 <TextBlock Grid.Row="0" Text="Меню" FontSize="28" FontWeight="Bold" Margin="5,0,0,15" Foreground="#111827"/>
 
                 <WrapPanel Grid.Row="1" Margin="5,0,0,15">
-                    <Button Content="Готовая еда" Style="{StaticResource CategoryButtonStyle}"/>
-                    <Button Content="Хлеб и выпечка" Style="{StaticResource CategoryButtonStyle}"/>
-                    <Button Content="Напитки" Style="{StaticResource CategoryButtonStyle}"/>
-                    <Button Content="Десерты" Style="{StaticResource CategoryButtonStyle}"/>
+                    <Button Content="Все" Command="{Binding LoadMenuItemsCommand}" CommandParameter="{x:Null}"
+                            Style="{StaticResource CategoryButtonStyle}"/>
+                    <ItemsControl ItemsSource="{Binding Categories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}" 
+                                    Command="{Binding DataContext.LoadMenuItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding Id}"
+                                    Style="{StaticResource CategoryButtonStyle}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </WrapPanel>
 
                 <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -66,7 +79,7 @@
                                             <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
                                         </Border>
                                         <StackPanel Grid.Row="1" Margin="15,10,15,0">
-                                            <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="Bold" Foreground="#111827"/>
+                                            <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="Bold" Foreground="#111827"/>
                                             <TextBlock Text="{Binding Weight}" FontSize="12" Foreground="#9CA3AF"/>
                                         </StackPanel>
                                         <Grid Grid.Row="2" Margin="15,0,12,15" VerticalAlignment="Bottom">
