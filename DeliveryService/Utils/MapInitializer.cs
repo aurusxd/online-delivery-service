@@ -14,6 +14,9 @@ namespace DeliveryService.Utils
         /// Событие при выборе адреса на карте
         /// </summary>
         public static event Action<double, double, string>? AddressSelected;
+        /// <summary>
+        /// Событие при выборе курьера на карте
+        /// </summary>
         public static event Func<List<List<double>>, Task>? CoordinatesRoute;
 
         public static async Task Initialize(WebView2 MapWebView)
@@ -142,10 +145,18 @@ namespace DeliveryService.Utils
             MapWebView.CoreWebView2.WebMessageReceived += (sender, args) =>
             {
                 string json = args.WebMessageAsJson;
-                var routeData = JsonSerializer.Deserialize<CoordinatesDTO>(json);
-               // var list = JsonSerializer.Deserialize<AddressDTO>(json);
-                CoordinatesRoute?.Invoke(routeData.coordinates);
-                //AddressSelected?.Invoke(list.lat, list.lon, list.address);
+                if (json.Contains("routeCoordinates"))
+                {
+                    var routeData = JsonSerializer.Deserialize<CoordinatesDTO>(json);
+                    CoordinatesRoute?.Invoke(routeData.coordinates);
+
+                }
+                if (json.Contains("mapClick"))
+                {
+                    var list = JsonSerializer.Deserialize<AddressDTO>(json);
+                    AddressSelected?.Invoke(list.lat, list.lon, list.address);
+
+                }
             };
 
         MapWebView.NavigateToString(html);
