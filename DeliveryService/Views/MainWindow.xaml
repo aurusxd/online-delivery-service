@@ -29,7 +29,7 @@
 
 
                 <Button Height="44" HorizontalAlignment="Stretch" Background="Transparent" 
-                Cursor="Hand" Margin="8,2,8,2" Command="{Binding OpenDispatcherCommand}">
+                Cursor="Hand" Margin="8,2,8,2" Command="{Binding OpenDispatcherCommand}" Click="Button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8" Padding="12,10">
@@ -187,6 +187,10 @@
                 </Border>
             </StackPanel>
         </Border>
+
+        <ContentControl
+        Grid.Column="1"
+        Content="{Binding CurrentView}"/>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <TextBlock Text="Добро пожаловать" FontSize="28" FontWeight="Medium" 

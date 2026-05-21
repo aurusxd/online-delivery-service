@@ -1,4 +1,5 @@
 ﻿using DeliveryService.ViewModels;
+using DeliveryService.Views;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,12 @@ namespace DeliveryService
             InitializeComponent();
             DataContext = viewModel;
             Closing += (s, e) => viewModel.CloseWindowsCommand.Execute(null); 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // In a Page/Window/ViewModel that has access to NavigationService instance
+            
         }
     }
 }

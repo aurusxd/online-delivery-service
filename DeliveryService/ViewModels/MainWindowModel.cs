@@ -1,6 +1,7 @@
 ﻿using DeliveryService.Commands;
 using DeliveryService.Services;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace DeliveryService.ViewModels
 {
@@ -36,12 +37,33 @@ namespace DeliveryService.ViewModels
         /// </summary>
         public ICommand CloseWindowsCommand { get; }
 
+        private object _currentView;
+        private readonly DispatcherViewModel _dispatcherVm;
+        private readonly OrderListViewModel _ordersVm;
 
-        public MainWindowModel(WindowsService windowsService)
+        public object CurrentView
         {
+            get => _currentView;
+            set => SetProperty(ref _currentView, value);
+        }
+
+
+        public MainWindowModel(
+            OrderListViewModel ordersVm,
+            DispatcherViewModel dispatcherVm,
+            WindowsService windowsService)
+        {
+
+            _dispatcherVm = dispatcherVm;
+            _ordersVm = ordersVm;
+
+            CurrentView = ordersVm;
             _windowsService = windowsService;
 
-            OpenDispatcherCommand = new RelayCommand(_windowsService.OpenDispatcher);
+            OpenDispatcherCommand = new RelayCommand(() =>
+                CurrentView = _dispatcherVm
+
+                );
             OpenOrderListCommand = new RelayCommand(_windowsService.OpenOrderList);
             OpenListCouriersCommand = new RelayCommand(_windowsService.OpenListCouriers);
 
