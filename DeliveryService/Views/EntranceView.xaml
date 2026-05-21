@@ -57,11 +57,10 @@
                 Name="RegisterButton"
                 Content="Зарегистрироваться"
                 Command="{Binding SaveCommand}"
-                Height="45"
-                Width="175"
-                FontSize="16"
-                HorizontalAlignment="Left"
-                Style="{StaticResource PrimaryButton}" Margin="230,103,0,-115"/>
+                Width="164"
+                FontSize="13"
+                HorizontalAlignment="Center"
+                Style="{StaticResource TextLinkButton}" Margin="0,160,0,-177"/>
         <Button Grid.Row="5" 
             x:Name="LoginButton"
             Content="Вход"
@@ -69,7 +68,7 @@
             Height="45"
             Width="176"
             FontSize="16"
-            HorizontalAlignment="Left"
-            Style="{StaticResource PrimaryButton}" Margin="30,103,0,-115"/>
+            HorizontalAlignment="Center"
+            Style="{StaticResource PrimaryButton}" Margin="0,110,0,-122"/>
     </Grid>
 </Window>
