@@ -39,6 +39,11 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private decimal _totalPrice;
 
+
+        public int CurrentUserId 
+        { 
+            get => _currentUserId;
+        }
         /// <summary>
         /// Список категорий
         /// </summary>
@@ -150,6 +155,11 @@ namespace DeliveryService.ViewModels
                 canExecute: _ => !IsBusy
             );
 
+            CreateOrderCommand = new RelayCommandAsync(
+                execute: () => TryRunTaskAsync(OpenNewOrder, "Ошибка открытия NewOrderView"),
+                canExecute: () => !IsBusy
+            );
+
             LoadDataCommand.Execute(null);
         }
 
@@ -235,6 +245,28 @@ namespace DeliveryService.ViewModels
             await LoadCategoriesAsync();
             await LoadMenuAsync();
             await LoadBasketAsync();
+        }
+        /// <summary>
+        /// Открытие окна NewOrderView для создания заказа
+        /// </summary>
+        private async Task OpenNewOrder()
+        {
+            if (_currentUserId <= 0)
+            {
+                ErrorMessage = "Id пользователя нет";
+                return;
+            }
+            if (BasketItems.Count == 0)
+            {
+                ErrorMessage = "Корзина пуста";
+                return;
+            }
+
+            bool? success = _windowsService.OpenNewOrder(_currentUserId);
+            if (success == true)
+                await LoadBasketAsync();
+            else
+                ErrorMessage = "Не удалось создать заказ";
         }
     }
 }

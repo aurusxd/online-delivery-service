@@ -12,7 +12,12 @@ namespace DeliveryService.ViewModels
     public class NewOrderViewModel : BaseViewModel
     {
         private readonly OrderService _orderService;
+        private readonly ClientService _clientService;
 
+        /// <summary>
+        /// Id пользователя
+        /// </summary>
+        private int _clientId;
         /// <summary>
         /// Имя клиента
         /// </summary>
@@ -152,11 +157,17 @@ namespace DeliveryService.ViewModels
         /// Команда закрытия окна
         /// </summary>
         public ICommand CloseCommand { get; }
+        /// <summary>
+        /// Команда загрузки пользователя
+        /// </summary>
+        public ICommand LoadUserCommand { get; }
 
 
-        public NewOrderViewModel(OrderService orderService)
+        public NewOrderViewModel(OrderService orderService, ClientService clientService)
         {
+            _clientId = -1;
             _orderService = orderService;
+            _clientService = clientService;
 
             SaveCommand = new RelayCommandAsync(
                 execute: () => TryRunTaskAsync(SaveOrderAsync, "Ошибка создания заказа"),
@@ -164,9 +175,41 @@ namespace DeliveryService.ViewModels
             );
 
             CloseCommand = new RelayCommand(_ => CloseWindow(false));
+
+            LoadUserCommand = new RelayCommandAsync(
+                execute: () => TryRunTaskAsync(LoadUser, "Ошибка загрузки пользователя"),
+                canExecute: () => !IsBusy
+            );
+
             IsFromMode = true;
         }
 
+
+        /// <summary>
+        /// Загрузка имени и телефона пользователя
+        /// </summary>
+        private async Task LoadUser()
+        {
+            if (_clientId > 0)
+            {
+                var client = await _clientService.GetClientById(_clientId);
+                
+                if (client != null)
+                {
+                    ClientName = client.Name;
+                    ClientPhone = client.Phone.ToString();
+                }
+            }
+        }
+        /// <summary>
+        /// Изменение id пользователя
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        public void SetCurrentUserId(int userId)
+        {
+            _clientId = userId;
+            LoadUserCommand.Execute(null);
+        }
 
         /// <summary>
         /// Проверка валидации ClientName, AddressFrom, AddressTo, и Price
@@ -197,7 +240,6 @@ namespace DeliveryService.ViewModels
 
             return true;
         }
-
         /// <summary>
         /// Проверка валидации ClientPhone и "очишение" от не-цифр
         /// </summary>
@@ -257,12 +299,16 @@ namespace DeliveryService.ViewModels
                 return;
             }
 
-            Client client = new Client
+            Client? client = await _clientService.GetClientById(_clientId);
+            if (client == null)
             {
-                Name = ClientName,
-                Phone = phoneNumber,
-                Created_At = DateTime.UtcNow
-            };
+                client = new Client
+                {
+                    Name = ClientName,
+                    Phone = phoneNumber,
+                    Created_At = DateTime.UtcNow
+                };
+            }
 
             Order order = new Order
             {

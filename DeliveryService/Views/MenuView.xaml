@@ -135,7 +135,9 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-                <Button Grid.Row="2" Content="Сделать заказ" Style="{StaticResource PrimaryButton}" Height="50" Margin="0,20,0,0"/>
+                <Button Grid.Row="2" Content="Сделать заказ" Command="{Binding CreateOrderCommand}" 
+                        CommandParameter="{Binding CurrentUserId}"
+                        Style="{StaticResource PrimaryButton}" Height="50" Margin="0,20,0,0"/>
             </Grid>
         </Border>
     </Grid>

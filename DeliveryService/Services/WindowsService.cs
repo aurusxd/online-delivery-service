@@ -1,4 +1,5 @@
-﻿using DeliveryService.Views;
+﻿using DeliveryService.ViewModels;
+using DeliveryService.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -74,6 +75,19 @@ namespace DeliveryService.Services
         /// </summary>
         /// <returns>Результат работы окна - DialogResult</returns>
         public bool? OpenNewOrder() => OpenModalWindow<NewOrderView>();
+        /// <summary>
+        /// Открытие NewOrderView с передачей id пользователя
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns>Результат работы окна - DialogResult</returns>
+        public bool? OpenNewOrder(int userId)
+        {
+            var win = _services.GetRequiredService<NewOrderView>();
+            if (win.DataContext is NewOrderViewModel vm)
+                vm.SetCurrentUserId(userId);
+
+            return win.ShowDialog();
+        }
         /// <summary>
         /// Открытие RegistrationCourier
         /// </summary>

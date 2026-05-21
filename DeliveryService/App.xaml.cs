@@ -45,6 +45,7 @@ namespace DeliveryService
             services.AddScoped<WindowsService>();
             services.AddScoped<OrderService>();
             services.AddScoped<CourierService>();
+            services.AddScoped<ClientService>();
             services.AddScoped<FoodCategoryService>();
             services.AddScoped<FoodService>();
             services.AddScoped<BasketService>();
