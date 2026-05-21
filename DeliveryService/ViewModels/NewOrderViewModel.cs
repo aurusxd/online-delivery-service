@@ -13,6 +13,7 @@ namespace DeliveryService.ViewModels
     {
         private readonly OrderService _orderService;
         private readonly ClientService _clientService;
+        private readonly BasketService _basketService;
 
         /// <summary>
         /// Id пользователя
@@ -30,6 +31,8 @@ namespace DeliveryService.ViewModels
         /// Номер клиента, "очищенный" от всего, кроме цифр
         /// </summary>
         private string _cleanedPhoneNumber;
+
+        private List<Basket> _clientBasket;
 
         /// <summary>
         /// Адрес отправки
@@ -163,11 +166,14 @@ namespace DeliveryService.ViewModels
         public ICommand LoadUserCommand { get; }
 
 
-        public NewOrderViewModel(OrderService orderService, ClientService clientService)
+        public NewOrderViewModel(OrderService orderService, ClientService clientService, BasketService basketService)
         {
-            _clientId = -1;
             _orderService = orderService;
             _clientService = clientService;
+            _basketService = basketService;
+            
+            _clientId = -1;
+            _clientBasket = new List<Basket>();
 
             SaveCommand = new RelayCommandAsync(
                 execute: () => TryRunTaskAsync(SaveOrderAsync, "Ошибка создания заказа"),
@@ -198,6 +204,10 @@ namespace DeliveryService.ViewModels
                 {
                     ClientName = client.Name;
                     ClientPhone = client.Phone.ToString();
+
+                    //var (basket, _) = await _basketService.GetUserBasketAsync(_clientId);
+                    var basket = await _basketService.GetUserActiveBasketAsync(_clientId);
+                    _clientBasket = basket;
                 }
             }
         }
@@ -271,11 +281,80 @@ namespace DeliveryService.ViewModels
             return true;
         }
 
+
+        private async Task SaveOrderAsync()
+        {
+            ErrorMessage = null;
+
+            if (!ValidateProperty())
+                return;
+
+            if (_clientBasket == null || _clientBasket.Count == 0)
+            {
+                ErrorMessage = "Корзина пуста. Невозможно оформить заказ.";
+                return;
+            }
+
+            Client? client = await _clientService.GetClientById(_clientId);
+            if (client == null)
+            {
+                if (!int.TryParse(ClientPhone, out int phoneNumber))
+                {
+                    ErrorMessage = "Номер телефона должен содержать только цифры";
+                    return;
+                }
+
+                #region На данный момент этот регион работает с ошибками
+                //if (!ValidatePhoneNumber())
+                //    return;
+
+                //if (!int.TryParse(_cleanedPhoneNumber, out int phoneNumber))
+                //{
+                //    ErrorMessage = "Номер телефона должен содержать только цифры";
+                //    return;
+                //}
+                #endregion
+
+                client = new Client
+                {
+                    Name = ClientName,
+                    Phone = phoneNumber,
+                    Created_At = DateTime.UtcNow
+                };
+            }
+
+            foreach (var item in _clientBasket)
+            {
+                var order = new Order
+                {
+                    ClientId = client.Id,
+                    Address_From = AddressFrom,
+                    Lat_From = LatFrom,
+                    Lon_From = LonFrom,
+                    Address_To = AddressTo,
+                    Lat_To = LatTo,
+                    Lon_To = LonTo,
+                    Price = item.Price,
+                    Status = "new",
+                    Created_At = DateTime.UtcNow,
+                    BasketId = item.Id
+                };
+
+                bool success = await _orderService.CreateOrderAsync(client, order);
+                if (!success)
+                {
+                    ErrorMessage = "Не удалось создать один из заказов";
+                    return;
+                }
+            }
+
+            CloseWindow(true);
+        }
         /// <summary>
         /// Создание заказа и сохранение
-        /// <br/> !!! Возможно нужно будет изменить то как получается клиент !!!
+        /// <br/> !!! Старый метод, остался как тестовый вариант !!!
         /// </summary>
-        private async Task SaveOrderAsync()
+        private async Task SaveOrderAsync_Old()
         {
             ErrorMessage = null;
 

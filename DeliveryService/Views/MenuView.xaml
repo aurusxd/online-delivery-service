@@ -122,7 +122,7 @@
                                         <StackPanel>
                                             <TextBlock Text="{Binding Food.Title}" FontWeight="SemiBold" FontSize="14"/>
                                             <TextBlock Text="{Binding Quantity}" Foreground="#6B7280" FontSize="12"/>
-                                            <TextBlock Text="{Binding Food.Price}" Foreground="#6B7280" FontSize="12"/>
+                                            <TextBlock Text="{Binding Price}" Foreground="#6B7280" FontSize="12"/>
                                         </StackPanel>
                                         <Button Grid.Column="1" Content="✕" 
                                             Command="{Binding DataContext.RemoveFromBasketCommand, RelativeSource={RelativeSource AncestorType=Window}}"

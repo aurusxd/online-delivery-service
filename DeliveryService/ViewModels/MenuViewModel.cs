@@ -207,10 +207,11 @@ namespace DeliveryService.ViewModels
         /// </summary>
         private async Task LoadBasketAsync()
         {
-            var (basket, totalPrice) = await _basketService.GetUserBasketAsync(_currentUserId);
+            //var (basket, totalPrice) = await _basketService.GetUserBasketAsync(_currentUserId);
+            var basket = await _basketService.GetUserActiveBasketAsync(_currentUserId);
 
             FillList(BasketItems, basket);
-            TotalPrice = totalPrice;
+            //TotalPrice = totalPrice;
         }
         /// <summary>
         /// Добавление в корзину

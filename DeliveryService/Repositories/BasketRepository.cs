@@ -54,6 +54,18 @@ namespace DeliveryService.Repositories
                 .ToListAsync();
         }
         /// <summary>
+        /// Получение всех объектов корзины по пользователю, исключая те объекты, которые уже привязаны к заказам
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns>Список объектов корзины, не привязанные к заказам, с указанным пользователем</returns>
+        public async Task<List<Basket>> GetUserActiveBasketAsync(int userId)
+        {
+            return await _context.Baskets
+                .Include(b => b.Food)
+                .Where(b => b.UserId == userId && !_context.Orders.Any(o => o.BasketId == b.Id))
+                .ToListAsync();
+        }
+        /// <summary>
         /// Добавление объекта корзины
         /// </summary>
         /// <param name="basket">Объект корзины</param>

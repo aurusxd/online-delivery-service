@@ -40,6 +40,15 @@ namespace DeliveryService.Services
             return (basket, totalPrice);
         }
         /// <summary>
+        /// Получение всех объектов корзины по пользователю, исключая те объекты, которые уже привязаны к заказам
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns>Список объектов корзины, не привязанные к заказам, с указанным пользователем</returns>
+        public async Task<List<Basket>> GetUserActiveBasketAsync(int userId)
+        {
+            return await _basketRepository.GetUserActiveBasketAsync(userId);
+        }
+        /// <summary>
         /// Создание нового объекта корзины
         /// </summary>
         /// <param name="userId">ID пользователя</param>
@@ -82,7 +91,7 @@ namespace DeliveryService.Services
             if (item != null)
             {
                 item.Quantity += quantity;
-                item.Price = food.Price * quantity;
+                item.Price = food.Price * item.Quantity;
                 await _basketRepository.UpdateAsync(item);
             }
             else
@@ -100,24 +109,6 @@ namespace DeliveryService.Services
             }
 
             return true;
-        }
-        /// <summary>
-        /// Первичное создание заказа - создание с пользователем, корзиной, статусом и датой
-        /// </summary>
-        /// <param name="userId">ID пользователя</param>
-        /// <param name="basketId">ID корзины</param>
-        /// <returns>ID шаблона заказа</returns>
-        public async Task<int> CreateOrderFromBasketAsync(int userId, int basketId)
-        {
-            Order order = new Order 
-            { 
-                ClientId = userId,
-                BasketId = basketId,
-                Status = "new"
-            };
-
-            await _orderRepository.AddAsync(order);
-            return order.Id;
         }
         /// <summary>
         /// Удаление объекта из корзины
