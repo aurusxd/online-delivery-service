@@ -88,6 +88,10 @@ namespace DeliveryService.ViewModels
         /// Команда удаления объекта из корзины
         /// </summary>
         public ICommand RemoveFromBasketCommand { get; }
+        /// <summary>
+        /// Команда создания заказа
+        /// </summary>
+        public ICommand CreateOrderCommand { get; }
 
 
         public MenuViewModel(WindowsService windowsService,
@@ -124,9 +128,44 @@ namespace DeliveryService.ViewModels
                 canExecute: _ => !IsBusy
             );
 
+            AddToBasketCommand = new RelayCommandAsync(
+                execute: async (parameter) =>
+                {
+                    if (int.TryParse(parameter?.ToString(), out int foodId))
+                        await TryRunTaskAsync(() => AddToBasketAsync(foodId, 1), "Ошибка загрузки объектов корзины");
+                    else
+                        ErrorMessage = "Ошибка опериции";
+                },
+                canExecute: _ => !IsBusy
+            );
+
+            RemoveFromBasketCommand = new RelayCommandAsync(
+                execute: async (parameter) =>
+                {
+                    if (int.TryParse(parameter?.ToString(), out int basketId))
+                        await TryRunTaskAsync(() => RemoveBasketItemAsync(basketId), "Ошибка в удалении объекта корзины");
+                    else
+                        ErrorMessage = "Ошибка опериции";
+                },
+                canExecute: _ => !IsBusy
+            );
+
             LoadDataCommand.Execute(null);
         }
 
+
+        /// <summary>
+        /// Заполнение коллекции
+        /// </summary>
+        /// <typeparam name="T">Тип коллекции</typeparam>
+        /// <param name="collection">Коллекция</param>
+        /// <param name="values">Значения для заполнения</param>
+        private static void FillList<T>(ObservableCollection<T> collection, List<T> values)
+        {
+            collection.Clear();
+            foreach (T item in values)
+                collection.Add(item);
+        }
 
         /// <summary>
         /// Загрузка всех категорий
@@ -134,10 +173,7 @@ namespace DeliveryService.ViewModels
         private async Task LoadCategoriesAsync()
         {
             var list = await _categoryService.GetAllAsync();
-
-            Categories.Clear();
-            foreach (var c in list) 
-                Categories.Add(c);
+            FillList(Categories, list);
         }
         /// <summary>
         /// Загрузка всех объектов еды
@@ -145,10 +181,7 @@ namespace DeliveryService.ViewModels
         private async Task LoadMenuAsync()
         {
             var items = await _foodService.GetAllAsync();
-
-            MenuItems.Clear();
-            foreach (var item in items) 
-                MenuItems.Add(item);
+            FillList(MenuItems, items);
         }
         /// <summary>
         /// Загрузка объектов еды по категории
@@ -157,10 +190,42 @@ namespace DeliveryService.ViewModels
         private async Task LoadMenuFromCategoryAsync(int categoryId)
         {
             var items = await _foodService.GetAllFromCategoryAsync(categoryId);
+            FillList(MenuItems, items);
+        }
+        /// <summary>
+        /// Загрузка объектов корзины
+        /// </summary>
+        private async Task LoadBasketAsync()
+        {
+            var (basket, totalPrice) = await _basketService.GetUserBasketAsync(_currentUserId);
 
-            MenuItems.Clear();
-            foreach (var item in items)
-                MenuItems.Add(item);
+            FillList(BasketItems, basket);
+            TotalPrice = totalPrice;
+        }
+        /// <summary>
+        /// Добавление в корзину
+        /// </summary>
+        /// <param name="foodId">ID объекта еды</param>
+        /// <param name="quantity">Количество</param>
+        private async Task AddToBasketAsync(int foodId, int quantity)
+        {
+            bool success = await _basketService.AddOrUpdateBasketItemAsync(_currentUserId, foodId, quantity);
+            if (success)
+                await LoadBasketAsync();
+            else
+                ErrorMessage = "Не удалось добавить товар в корзину";
+        }
+        /// <summary>
+        /// Удаление из корзины
+        /// </summary>
+        /// <param name="basketItemId">ID объекта корзины</param>
+        private async Task RemoveBasketItemAsync(int basketItemId)
+        {
+            bool success = await _basketService.RemoveItemAsync(basketItemId);
+            if (success)
+                await LoadBasketAsync();
+            else
+                ErrorMessage = "Не удалось удалить из корзины";
         }
         /// <summary>
         /// Загрузка данных
@@ -169,6 +234,7 @@ namespace DeliveryService.ViewModels
         {
             await LoadCategoriesAsync();
             await LoadMenuAsync();
+            await LoadBasketAsync();
         }
     }
 }

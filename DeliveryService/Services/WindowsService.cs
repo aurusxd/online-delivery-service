@@ -66,6 +66,10 @@ namespace DeliveryService.Services
         /// </summary>
         public void OpenListCouriers() => OpenWindow<ListCouriersView>();
         /// <summary>
+        /// Открытие MenuView
+        /// </summary>
+        public void OpenMenu() => OpenWindow<MenuView>();
+        /// <summary>
         /// Открытие NewOrderView
         /// </summary>
         /// <returns>Результат работы окна - DialogResult</returns>

@@ -46,16 +46,15 @@ namespace DeliveryService.Services
         /// <param name="foodId">ID еды</param>
         /// <param name="quantity">Количество</param>
         /// <returns>Прошла ли операция</returns>
-        public async Task<bool> AddNewBusketItemAsync(int userId, int foodId, int quantity)
+        public async Task<bool> AddNewBasketItemAsync(int userId, int foodId, int quantity)
         {
             var food = await _foodRepository.GetById(foodId);
             if (food == null)
                 return false;
 
             decimal price = food.Price * quantity;
-
-            Basket item = new Basket 
-            { 
+            Basket item = new Basket
+            {
                 UserId = userId,
                 FoodId = foodId,
                 Quantity = quantity,
@@ -63,6 +62,43 @@ namespace DeliveryService.Services
             };
 
             await _basketRepository.AddAsync(item);
+
+            return true;
+        }
+        /// <summary>
+        /// Создание нового объекта корзины или обновление уже существующего
+        /// </summary>
+        /// <param name="userId">ID пользователя</param>
+        /// <param name="foodId">ID еды</param>
+        /// <param name="quantity">Количество</param>
+        /// <returns>Прошла ли операция</returns>
+        public async Task<bool> AddOrUpdateBasketItemAsync(int userId, int foodId, int quantity)
+        {
+            var food = await _foodRepository.GetById(foodId);
+            if (food == null)
+                return false;
+
+            var item = await _basketRepository.GetByUserAndFoodId(userId, foodId);
+            if (item != null)
+            {
+                item.Quantity += quantity;
+                item.Price = food.Price * quantity;
+                await _basketRepository.UpdateAsync(item);
+            }
+            else
+            {
+                decimal price = food.Price * quantity;
+                Basket newItem = new Basket 
+                { 
+                    UserId = userId,
+                    FoodId = foodId,
+                    Quantity = quantity,
+                    Price = price
+                };
+
+                await _basketRepository.AddAsync(newItem);
+            }
+
             return true;
         }
         /// <summary>
