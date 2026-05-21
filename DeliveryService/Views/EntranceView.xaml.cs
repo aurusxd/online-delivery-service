@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace DeliveryService.Views
 {
-   
+
     public partial class EntranceView : Window
     {
         public EntranceView()
